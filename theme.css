@@ -1,0 +1,45 @@
+/* Import Google Fonts - add this to your HTML <head> or at the top of your CSS */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;600;700&display=swap');
+
+:root {
+  --bulma-primary-h: 137deg;
+  --bulma-primary-s: 21%;
+  --bulma-primary-l: 30%;
+  --bulma-primary-invert-l: 100%;
+  --bulma-link-h: 321deg;
+  --bulma-link-s: 19%;
+  --bulma-link-l: 35%;
+  --bulma-link-invert-l: 100%;
+  --bulma-info-h: 132deg;
+  --bulma-info-s: 18%;
+  --bulma-info-l: 49%;
+  --bulma-info-invert-l: 100%;
+  --bulma-success-h: 200deg;
+  --bulma-success-s: 30%;
+  --bulma-success-l: 48%;
+  --bulma-success-invert-l: 100%;
+  --bulma-warning-h: 34deg;
+  --bulma-warning-s: 52%;
+  --bulma-warning-l: 58%;
+  --bulma-warning-invert-l: 100%;
+  --bulma-danger-h: 353deg;
+  --bulma-danger-s: 55%;
+  --bulma-danger-l: 63%;
+  --bulma-danger-invert-l: 100%;
+  --bulma-scheme-h: 44;
+  --bulma-scheme-s: 35%;
+  --bulma-scheme-main-l: 84%;
+  --bulma-text-l: 29%;
+  --bulma-family-primary: 'Merriweather', serif;
+  --bulma-body-family: 'Merriweather', serif;
+  --bulma-family-code: Inconsolata, Hack, SF Mono, Roboto Mono, Source Code Pro, Ubuntu Mono, monospace;
+  --bulma-code-family: Inconsolata, Hack, SF Mono, Roboto Mono, Source Code Pro, Ubuntu Mono, monospace;
+  --bulma-size-normal: 18px;
+  --bulma-weight-normal: 400;
+  --bulma-weight-bold: 700;
+  --bulma-radius: 6px;
+  --bulma-radius-small: 2px;
+  --bulma-radius-medium: 8px;
+  --bulma-radius-large: 12px;
+  --bulma-block-spacing: 1.5rem;
+}

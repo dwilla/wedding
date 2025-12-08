@@ -5,15 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drew & Kathryn | Wedding</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="theme.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Futura:wght@300;400;500&family=Lato:wght@300;400&display=swap');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -25,8 +19,6 @@
         transform: translateY(0);
       }
     }
-
-
 
     @keyframes slideInLeft {
       from {
@@ -76,279 +68,26 @@
       }
     }
 
-    body {
-      font-family: 'Lato', sans-serif;
-      line-height: 1.7;
-      color: #2d3436;
-      overflow-x: hidden;
-      background: #f8f5f2;
-      position: relative;
-    }
-
     .cactus-anchor {
       position: fixed;
-      top: 0;
-      left: -150px;
+      bottom: 0;
+      right: -100px;
       width: 300px;
       height: 300px;
       z-index: 1000;
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: flex-end;
+      justify-content: flex-end;
       overflow: hidden;
       pointer-events: none;
     }
 
     .cactus-image {
-      width: 100%;
-      height: 100%;
+      width: 60%;
+      height: 60%;
       object-fit: contain;
       transform-origin: center;
       will-change: transform;
-    }
-
-    .hero {
-      height: 100vh;
-      background: linear-gradient(rgba(60, 80, 60, 0.4), rgba(70, 90, 70, 0.5)),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%234a5d3f" width="1200" height="800"/><path fill="%235d7a51" d="M0 400 Q300 300 600 400 T1200 400 V800 H0 Z"/><path fill="%236b8e5f" d="M0 500 Q300 450 600 500 T1200 500 V800 H0 Z"/><path fill="%237fa872" d="M0 600 Q300 550 600 600 T1200 600 V800 H0 Z"/></svg>');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(232, 220, 200, 0.2) 0%, transparent 70%);
-      top: -100px;
-      right: -100px;
-    }
-
-    .geometric-accent {
-      position: absolute;
-      opacity: 0.15;
-    }
-
-    .accent-1 {
-      width: 150px;
-      height: 150px;
-      border: 2px solid #2d3436;
-      top: 15%;
-      left: 10%;
-      transform: rotate(45deg);
-    }
-
-    .accent-2 {
-      width: 100px;
-      height: 100px;
-      background: #c4b5a0;
-      bottom: 20%;
-      right: 12%;
-      border-radius: 50%;
-    }
-
-    .names {
-      font-family: 'Playfair Display', serif;
-      font-size: 5rem;
-      font-weight: 400;
-      margin-bottom: 1rem;
-      color: #f8f5f2;
-      letter-spacing: -1px;
-      animation: fadeIn 1.2s ease-out;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .ampersand {
-      font-family: 'Playfair Display', serif;
-      font-size: 4.5rem;
-      margin: 0 1.5rem;
-      color: #c4d7b8;
-      font-style: italic;
-      font-weight: 300;
-    }
-
-    .tagline {
-      font-size: 1.3rem;
-      margin-top: 1rem;
-      color: #e8dcc8;
-      font-weight: 300;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      animation: fadeIn 1.4s ease-out;
-    }
-
-    .date-location {
-      margin-top: 4rem;
-      font-size: 1.1rem;
-      background: rgba(248, 245, 242, 0.95);
-      padding: 2.5rem 3rem;
-      border: 1px solid rgba(107, 142, 95, 0.3);
-      color: #2d3436;
-      animation: fadeIn 1.6s ease-out;
-    }
-
-    .date {
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 0.5rem;
-      letter-spacing: 2px;
-      color: #5d7a51;
-    }
-
-    .section {
-      padding: 5rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section>* {
-      position: relative;
-      z-index: 2;
-    }
-
-    .section:nth-child(2) {
-      background: #e8f0e3;
-      position: relative;
-    }
-
-    .section:nth-child(3) {
-      background: #d4e0cc;
-      position: relative;
-    }
-
-    .section:nth-child(4) {
-      background: #c4d7b8;
-      position: relative;
-    }
-
-    .section-title {
-      opacity: 0;
-    }
-
-    .section-title.in-view {
-      animation: slideInUp 0.8s ease-out forwards;
-    }
-
-    .content {
-      opacity: 0;
-    }
-
-    .content.in-view {
-      animation: slideInUp 0.8s ease-out 0.2s forwards;
-    }
-
-    .cta-button {
-      opacity: 0;
-    }
-
-    .cta-button.in-view {
-      animation: scaleIn 0.6s ease-out 0.4s forwards;
-    }
-
-    .divider {
-      opacity: 0;
-    }
-
-    .divider.in-view {
-      animation: slideInUp 0.6s ease-out forwards;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      color: #2d3436;
-      font-weight: 400;
-      letter-spacing: -1px;
-    }
-
-    .content {
-      font-size: 1.15rem;
-      line-height: 2;
-      text-align: center;
-      font-weight: 300;
-      color: #2d3436;
-      max-width: 700px;
-      margin: 0 auto;
-      word-spacing: 0.1em;
-    }
-
-    .cta-button {
-      display: inline-block;
-      margin-top: 2.5rem;
-      padding: 1rem 3rem;
-      background: transparent;
-      color: #2d3436;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 400;
-      transition: all 0.3s ease;
-      border: 2px solid #5d7a51;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-
-    .cta-button:hover {
-      background: #5d7a51;
-      color: #f8f5f2;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(93, 122, 81, 0.3);
-    }
-
-    .divider {
-      width: 80px;
-      height: 1px;
-      background: #5d7a51;
-      margin: 2rem auto;
-    }
-
-
-
-
-
-    @media (max-width: 768px) {
-      .names {
-        font-size: 2.5rem;
-      }
-
-      .ampersand {
-        font-size: 2.2rem;
-        margin: 0 0.8rem;
-      }
-
-      .tagline {
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-      }
-
-      .date {
-        font-size: 1.2rem;
-      }
-
-      .section-title {
-        font-size: 2rem;
-      }
-
-      .date-location {
-        padding: 2rem 1.5rem;
-      }
-
-      .geometric-accent {
-        display: none;
-      }
     }
   </style>
 </head>
@@ -358,50 +97,133 @@
     <img src="barrel_cactus.svg" alt="Decorative barrel cactus" class="cactus-image" />
   </div>
 
-  <section class="hero">
-    <div class="geometric-accent accent-1"></div>
-    <div class="geometric-accent accent-2"></div>
-    <div class="names">
-      Drew <span class="ampersand">&</span> Kathryn
-    </div>
-    <div class="tagline">A Celebration of Love</div>
-    <div class="date-location">
-      <div class="date">Save the Date</div>
-      <div>Details coming soon</div>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="box has-text-centered has-text-white has-background-link">
+        <h1 class="is-size-1">
+          Drew <span>&</span> Kathryn
+        </h1>
+        <div class="is-size-3 mb-3">A Celebration of Love</div>
+        <div class="date-location">
+          <div class="is-size-5">Save the Date</div>
+          <div class="is-size-4">May 8th, 2026</div>
+          <div>Truth or Consequences, NM</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title">Our Story</h2>
+  <section class="section has-text-centered">
+    <h2 class="title has-text-black">Getting There</h2>
     <div class="divider"></div>
-    <p class="content">
-      Two creatives, one beautiful journey.<br><br>
-      We're excited to celebrate our special day with those who matter most.
-      More details about our wedding celebration will be shared soon.
+    <p class="content has-text-black is-size-6">
+      Fly into Albuquerque or El Paso (both 2 hours from T or C). We typically fly Southwest from Manchester, NH.
+      <br><br>
+      Rides may be available from the airtport if enough folks would take advantage of this :)
+    </p>
+  </section>
+
+  <section class="section has-background-info-75 has-text-centered">
+    <h2 class="title has-text-black">In Town</h2>
+    <div class="divider"></div>
+    <p class="content has-text-black">
+      Downtown T or C is walkable with access to groceries, coffee, restaurants, and beautiful mountain views.
+      Accommodations range from $100-$250/night, including hotels with private hot springs access. Plenty of Airbnbs
+      available too.<br><br>
+      The reception will take place at The Charles Motel and Hot Springs, at which we've reserved 12 rooms for guests
+      that want to stay there.
     </p>
   </section>
 
   <section class="section">
-    <h2 class="section-title">Ceremony & Reception</h2>
-    <div class="divider"></div>
-    <p class="content">
-      Join us for an intimate celebration surrounded by nature.<br><br>
-      Information about the ceremony, reception, and accommodations will be available here soon.
-      Please check back for updates.
-    </p>
-    <div style="text-align: center;">
-      <a href="#" class="cta-button">RSVP</a>
+    <div class="container is-max-tablet">
+      <article class="panel is-primary">
+        <p class="panel-heading">Schedule</p>
+        <a class="panel-block has-background-link">
+          May 1-3, 2026 — Fiesta Weekend<br>
+          🌱<br>
+          Optional, but we picked this date so you can experience T or
+          C's biggest celebration: parade, rodeo, downtown fair, food, and music.
+        </a>
+        <a class="panel-block has-background-link">
+          May 7, 2026 — Gathering<br>
+          🌿<br>
+          For those who want to be part of the ceremony. Not quite a rehearsal dinner, but something special.
+        </a>
+        <a class="panel-block has-background-link">
+          May 8, 2026 — The Big Day<br>
+          🌳<br>
+          We get married. You watch. Then we all dance.<br><br>
+        </a>
+        <a class="panel-block has-background-link">
+          May 9, 2026 — Art Hop<br>
+          🔥<br>
+          Monthly celebration where galleries open 6-8pm. Walk around, see art, hear music, eat food. We want to share
+          this special part of town with you.
+        </a>
+        <a class="panel-block has-background-link">
+          May 10, 2026 — The End<br>
+          🪾<br>
+          Just kidding, please never leave.
+        </a>
+      </article>
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="section-title">Registry</h2>
-    <div class="divider"></div>
-    <p class="content">
-      Your presence is the greatest gift.<br><br>
-      If you wish to honor us with a gift,
-      we'll share our registry information here soon.
+  <section class="section has-background-info-75">
+    <h2 class="title has-text-black has-text-centered">RSVP</h2>
+    <p class="content has-text-black has-text-centered">
+      Please RSVP to receive updates on accommodations, specific event times, and other important
+      information as we finalize the plans.
     </p>
+    <div class="container is-max-tablet">
+      <div class="box has-background-primary mt-6">
+        <form id="rsvpForm">
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input class="input has-background-link" type="text" name="name" placeholder="Your full name" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input class="input has-background-link" type="email" name="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Number of Guests</label>
+            <div class="control">
+              <input class="input has-background-link" type="number" name="guests" min="1" value="1" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Planning to Attend?</label>
+            <div class="control">
+              <label class="radio has-text-white">
+                <input type="radio" name="attending" value="Yes" required>
+                Yes
+              </label>
+              <label class="radio has-text-white">
+                <input type="radio" name="attending" value="Maybe">
+                Maybe
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control has-text-centered">
+              <button type="submit" class="button is-link is-medium">Submit RSVP</button>
+            </div>
+          </div>
+
+          <div id="formMessage" class="notification is-hidden"></div>
+        </form>
+      </div>
+    </div>
   </section>
 
   <script>
@@ -463,16 +285,6 @@
       ticking = false;
     }
 
-    // Text reveal effect - stagger words on animation
-    const textElements = document.querySelectorAll('.content');
-    textElements.forEach(el => {
-      const originalText = el.innerText;
-      const words = originalText.split(' ');
-      el.innerHTML = words.map((word, i) =>
-        `<span class="word" style="display: inline-block; opacity: 0; animation: slideInUp 0.5s ease-out ${0.35 + i * 0.04}s forwards;">${word}&nbsp;</span>`
-      ).join('');
-    });
-
     // Barrel cactus scroll spin effect
     const cactusImage = document.querySelector('.cactus-image');
     let cactusTicking = false;
@@ -489,6 +301,55 @@
       cactusImage.style.transform = `rotate(${rotation}deg)`;
       cactusTicking = false;
     }
+  </script>
+
+  <script>
+    // RSVP Form Submission to Google Sheets
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0PzsMdqq8GwAZvIHHXgmUl1xw1dvpLnf-A-jRYReEgw-5hEyGW6nt9KAfc-8XbbOy/exec';
+
+    document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        guests: formData.get('guests'),
+        attending: formData.get('attending')
+      };
+
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      const messageDiv = document.getElementById('formMessage');
+
+      // Disable button and show loading
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+      messageDiv.classList.add('is-hidden');
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        // With no-cors mode, we can't read the response, so assume success
+        messageDiv.textContent = 'Thank you! Your RSVP has been received.';
+        messageDiv.className = 'notification is-success';
+        e.target.reset();
+
+      } catch (error) {
+        messageDiv.textContent = 'Something went wrong. Please try again or email us directly.';
+        messageDiv.className = 'notification is-danger';
+      }
+
+      // Re-enable button
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit RSVP';
+    });
   </script>
 
 </body>
