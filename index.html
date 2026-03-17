@@ -125,10 +125,118 @@
     <h2 class="title has-text-black">Getting Here</h2>
     <div class="divider"></div>
     <p class="content has-text-black is-size-6">
-      Fly into Albuquerque or El Paso (both 2 hours from T or C). We typically fly Southwest from Manchester, NH.
+      Fly into Albuquerque (ABQ) or El Paso (ELP) — both about 2 hours from T or C. We typically fly Southwest from Manchester, NH.
       <br><br>
-      Rides may be available from the airport if enough folks would take advantage of this :)
+      Rides may be available from the airport if enough folks would take advantage of this. Fill out your travel details below so we can help coordinate!
     </p>
+
+    <!-- Travel Coordination -->
+    <div class="container is-max-desktop mt-5">
+
+      <!-- Submit travel form -->
+      <div class="box has-background-primary">
+        <p class="title has-text-white mb-4" style="font-size:2rem;">Share Your Travel Plans</p>
+        <form id="travelForm">
+          <div class="columns is-multiline">
+            <!-- Row 1: Display Name + Group Size -->
+            <div class="column is-half">
+              <div class="field">
+                <label class="label has-text-white">Display Name <span style="font-weight:400;font-size:0.85rem;">(optional — e.g. AB, Sarah, The Johnsons)</span></label>
+                <div class="control">
+                  <input class="input has-background-info has-text-white" type="text" name="displayName" placeholder="How you'd like to appear on the board">
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="field">
+                <label class="label has-text-white">People in your group</label>
+                <div class="control">
+                  <input class="input has-background-info has-text-white" type="number" name="groupSize" min="1" value="1" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Arriving (date/time + airport) + Departing (date/time + airport) -->
+            <div class="column is-half">
+              <div class="field">
+                <label class="label has-text-white">Arrival date &amp; time</label>
+                <div class="control">
+                  <input class="input has-background-info has-text-white" type="datetime-local" name="arrivalTime" required>
+                </div>
+              </div>
+              <div class="field mt-2">
+                <label class="label has-text-white">Arriving at</label>
+                <div class="control">
+                  <label class="radio has-text-white mr-4">
+                    <input type="radio" name="arrivalAirport" value="ABQ" required> ABQ (Albuquerque)
+                  </label>
+                  <label class="radio has-text-white">
+                    <input type="radio" name="arrivalAirport" value="ELP"> ELP (El Paso)
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="field">
+                <label class="label has-text-white">Departure date &amp; time</label>
+                <div class="control">
+                  <input class="input has-background-info has-text-white" type="datetime-local" name="departureTime" required>
+                </div>
+              </div>
+              <div class="field mt-2">
+                <label class="label has-text-white">Departing from</label>
+                <div class="control">
+                  <label class="radio has-text-white mr-4">
+                    <input type="radio" name="departureAirport" value="ABQ" required> ABQ (Albuquerque)
+                  </label>
+                  <label class="radio has-text-white">
+                    <input type="radio" name="departureAirport" value="ELP"> ELP (El Paso)
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 3: Needs Ride -->
+            <div class="column is-full">
+              <div class="field">
+                <label class="label has-text-white">Need a ride from the airport?</label>
+                <div class="control">
+                  <label class="radio has-text-white mr-3">
+                    <input type="radio" name="needsRide" value="Yes" required> Yes
+                  </label>
+                  <label class="radio has-text-white mr-3">
+                    <input type="radio" name="needsRide" value="Maybe"> Maybe
+                  </label>
+                  <label class="radio has-text-white">
+                    <input type="radio" name="needsRide" value="No"> No
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control has-text-centered">
+              <button type="submit" class="button is-link is-medium">Submit Travel Plans</button>
+            </div>
+          </div>
+          <div id="travelFormMessage" class="notification is-hidden"></div>
+        </form>
+      </div>
+
+      <!-- Arrivals board -->
+      <div class="mt-5">
+        <button id="boardToggleBtn" class="cal-toggle-btn" style="font-size:2.5rem;font-family:'Pinyon Script',cursive;color:black;">
+          Who's Coming When <span class="cal-toggle-chevron" style="color:hsl(8,48%,42%);">▾</span>
+        </button>
+        <div id="boardWrap" style="overflow:hidden;max-height:0;transition:max-height 0.4s ease;">
+          <p class="content has-text-black is-size-6 mb-3 mt-2">Coordinate rides and arrivals with fellow guests.</p>
+          <div id="travelBoard">
+            <p class="has-text-black" style="opacity:0.6;font-style:italic;">Loading travel plans...</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <section class="section has-background-info-75 has-text-centered" id="in-town">
@@ -842,6 +950,119 @@
         header.classList.add('is-open');
         panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
+    });
+  </script>
+
+  <script>
+    // ── Travel Form + Arrivals Board ──
+    const TRAVEL_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx_Sagim69av8dxNNhTVeaM1xoWS60XjF4EvbBfah6ipB3YTbq4qEzppnSU69jNx_V_/exec';
+
+    // Format datetime-local value to readable string
+    function formatDateTime(val) {
+      if (!val) return '—';
+      const d = new Date(val);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+             ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    }
+
+    // Render arrivals board
+    function renderTravelBoard(rows) {
+      const board = document.getElementById('travelBoard');
+      if (!rows || rows.length === 0) {
+        board.innerHTML = '<p class="has-text-black" style="opacity:0.6;font-style:italic;">No travel plans submitted yet — be the first!</p>';
+        return;
+      }
+      // Sort by arrival time
+      rows.sort((a, b) => new Date(a.arrivalTime) - new Date(b.arrivalTime));
+
+      let html = '<div style="overflow-x:auto;"><table class="travel-table">';
+      html += '<thead><tr><th>Name</th><th>Arriving</th><th>Departing</th><th>Group</th><th>Needs Ride?</th></tr></thead><tbody>';
+      rows.forEach(r => {
+        const name = r.displayName || 'Guest';
+        const arrAirport = r.arrivalAirport || r.airport || '—';
+        const depAirport = r.departureAirport || r.airport || '—';
+        const arrBadge = arrAirport !== '—' ? `<span class="travel-badge ${arrAirport.toLowerCase()}">${arrAirport}</span> ` : '';
+        const depBadge = depAirport !== '—' ? `<span class="travel-badge ${depAirport.toLowerCase()}">${depAirport}</span> ` : '';
+        const ride = r.needsRide || '—';
+        const rideClass = ride === 'Yes' ? 'travel-ride-yes' : ride === 'Maybe' ? 'travel-ride-maybe' : 'travel-ride-no';
+        html += `<tr>
+          <td>${name}</td>
+          <td>${arrBadge}${formatDateTime(r.arrivalTime)}</td>
+          <td>${depBadge}${formatDateTime(r.departureTime)}</td>
+          <td>${r.groupSize || 1}</td>
+          <td class="${rideClass}">${ride}</td>
+        </tr>`;
+      });
+      html += '</tbody></table></div>';
+      board.innerHTML = html;
+    }
+
+    // Fetch travel data from Apps Script
+    function loadTravelBoard() {
+      fetch(TRAVEL_SCRIPT_URL + '?action=getTravelData')
+        .then(r => r.json())
+        .then(data => renderTravelBoard(data))
+        .catch(() => {
+          document.getElementById('travelBoard').innerHTML =
+            '<p class="has-text-black" style="opacity:0.6;font-style:italic;">Could not load travel plans right now.</p>';
+        });
+    }
+
+    loadTravelBoard();
+
+    // Board toggle
+    const boardToggleBtn = document.getElementById('boardToggleBtn');
+    const boardWrap = document.getElementById('boardWrap');
+    boardToggleBtn.addEventListener('click', () => {
+      const isOpen = boardWrap.style.maxHeight !== '0px' && boardWrap.style.maxHeight !== '';
+      if (isOpen) {
+        boardWrap.style.maxHeight = '0';
+        boardToggleBtn.classList.remove('is-open');
+      } else {
+        boardWrap.style.maxHeight = boardWrap.scrollHeight + 'px';
+        boardToggleBtn.classList.add('is-open');
+      }
+    });
+
+    // Travel form submission
+    document.getElementById('travelForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = {
+        formType: 'travel',
+        displayName: formData.get('displayName') || 'Guest',
+        arrivalAirport: formData.get('arrivalAirport'),
+        arrivalTime: formData.get('arrivalTime'),
+        departureAirport: formData.get('departureAirport'),
+        departureTime: formData.get('departureTime'),
+        groupSize: formData.get('groupSize'),
+        needsRide: formData.get('needsRide'),
+      };
+
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const messageDiv = document.getElementById('travelFormMessage');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+      messageDiv.classList.add('is-hidden');
+
+      try {
+        await fetch(TRAVEL_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        messageDiv.textContent = 'Thanks! Your travel plans have been added to the board.';
+        messageDiv.className = 'notification is-success';
+        e.target.reset();
+        setTimeout(loadTravelBoard, 2000); // reload board after short delay
+      } catch (err) {
+        messageDiv.textContent = 'Something went wrong. Please try again.';
+        messageDiv.className = 'notification is-danger';
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Travel Plans';
     });
   </script>
 

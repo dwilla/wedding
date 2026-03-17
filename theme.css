@@ -84,6 +84,55 @@ h1, .is-size-1 {
   -webkit-text-stroke: 0.6px currentColor;
 }
 
+/* ── Travel Board ── */
+.travel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Tinos', serif;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.travel-table th {
+  border-bottom: 2px solid hsl(8, 48%, 42%);
+  padding: 0.5rem 0.6rem;
+  font-weight: 700;
+  color: hsl(8, 30%, 30%);
+  white-space: nowrap;
+}
+
+.travel-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  vertical-align: top;
+}
+
+.travel-table tr:last-child td {
+  border-bottom: none;
+}
+
+.travel-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.travel-badge.abq {
+  background: hsl(137, 21%, 30%);
+  color: white;
+}
+
+.travel-badge.elp {
+  background: hsl(8, 48%, 42%);
+  color: white;
+}
+
+.travel-ride-yes   { color: hsl(137, 21%, 30%); font-weight: 700; }
+.travel-ride-maybe { color: hsl(34, 52%, 40%); font-weight: 700; }
+.travel-ride-no    { color: hsl(0, 0%, 55%); }
+
 /* ── Full Calendar ── */
 .cal-toggle-btn {
   background: none;
