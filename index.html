@@ -105,16 +105,24 @@
         </h1>
         <div class="is-size-3 mb-3">A Celebration of Love</div>
         <div class="date-location">
-          <div class="is-size-5">Save the Date</div>
-          <div class="is-size-4">May 8th, 2026</div>
-          <div>Truth or Consequences, NM</div>
+          <div class="date-text">Friday, May 8th, 2026</div>
+          <div class="location-text">In Truth or Consequences, New Mexico</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section has-text-centered">
-    <h2 class="title has-text-black">Getting There</h2>
+  <nav id="section-nav">
+    <a href="#getting-there" class="nav-tab">Getting Here</a>
+    <a href="#in-town" class="nav-tab">In Town</a>
+    <a href="#why-torc" class="nav-tab">Why T or C?</a>
+    <a href="#schedule" class="nav-tab">Schedule</a>
+    <a href="#find-us" class="nav-tab">Find Us</a>
+    <a href="#rsvp" class="nav-tab">RSVP</a>
+  </nav>
+
+  <section class="section has-text-centered" id="getting-there">
+    <h2 class="title has-text-black">Getting Here</h2>
     <div class="divider"></div>
     <p class="content has-text-black is-size-6">
       Fly into Albuquerque or El Paso (both 2 hours from T or C). We typically fly Southwest from Manchester, NH.
@@ -123,10 +131,10 @@
     </p>
   </section>
 
-  <section class="section has-background-info-75 has-text-centered">
-    <h2 class="title has-text-black">In Town</h2>
+  <section class="section has-background-info-75 has-text-centered" id="in-town">
+    <h2 class="title has-text-white">In Town</h2>
     <div class="divider"></div>
-    <p class="content has-text-black">
+    <p class="content has-text-white">
       Downtown T or C is walkable with access to groceries, coffee, restaurants, and beautiful mountain views.
       Accommodations range from $100-$250/night, including hotels with private hot springs access. Plenty of Airbnbs
       available too.<br><br>
@@ -135,7 +143,7 @@
     </p>
   </section>
 
-  <section class="section has-text-centered">
+  <section class="section has-text-centered" id="why-torc">
     <h2 class="title has-text-black">Why T or C?</h2>
     <div class="divider"></div>
     <p class="content has-text-black">
@@ -155,43 +163,406 @@
     </div>
   </section>
 
-  <section class="section has-background-info-75">
+  <section class="section has-background-info-75" id="schedule">
     <div class="container is-max-tablet">
+
+      <!-- Full Calendar toggle -->
+      <div class="has-text-centered mt-3">
+        <button class="cal-toggle-btn" id="calToggleBtn">
+          View Full Calendar <span class="cal-toggle-chevron">▾</span>
+        </button>
+      </div>
+
+      <div class="cal-wrap" id="calWrap">
+        <!-- Day-of-week headers -->
+        <div class="cal-grid">
+          <div class="cal-dow">Thu</div>
+          <div class="cal-dow">Fri</div>
+          <div class="cal-dow">Sat</div>
+          <div class="cal-dow">Sun</div>
+          <div class="cal-dow">Mon</div>
+          <div class="cal-dow">Tue</div>
+          <div class="cal-dow">Wed</div>
+
+          <!-- Row 1: empty Thu, then May 1–6 -->
+          <div class="cal-cell is-empty"></div>
+          <div class="cal-cell" data-day="1">
+            <span class="cal-date">1</span>
+            <span class="cal-label">Fiesta Weekend</span>
+          </div>
+          <div class="cal-cell" data-day="2">
+            <span class="cal-date">2</span>
+            <span class="cal-label">Fiesta Weekend</span>
+          </div>
+          <div class="cal-cell" data-day="3">
+            <span class="cal-date">3</span>
+            <span class="cal-label">Fiesta Weekend</span>
+          </div>
+          <div class="cal-cell is-muted" data-day="4">
+            <span class="cal-date">4</span>
+            <span class="cal-label">Details coming soon</span>
+          </div>
+          <div class="cal-cell is-muted" data-day="5">
+            <span class="cal-date">5</span>
+            <span class="cal-label">Details coming soon</span>
+          </div>
+          <div class="cal-cell is-muted" data-day="6">
+            <span class="cal-date">6</span>
+            <span class="cal-label">Details coming soon</span>
+          </div>
+
+          <!-- Row 2: May 7–10, then empty cells -->
+          <div class="cal-cell" data-day="7">
+            <span class="cal-date">7</span>
+            <span class="cal-label">Gathering</span>
+          </div>
+          <div class="cal-cell is-highlight" data-day="8">
+            <span class="cal-date">8</span>
+            <span class="cal-label">The Big Day 💍</span>
+          </div>
+          <div class="cal-cell" data-day="9">
+            <span class="cal-date">9</span>
+            <span class="cal-label">Art Hop</span>
+          </div>
+          <div class="cal-cell" data-day="10">
+            <span class="cal-date">10</span>
+            <span class="cal-label">The End</span>
+          </div>
+          <div class="cal-cell is-empty"></div>
+          <div class="cal-cell is-empty"></div>
+          <div class="cal-cell is-empty"></div>
+        </div>
+
+        <!-- Detail drawer -->
+        <div class="cal-drawer" id="calDrawer">
+          <div class="cal-drawer-inner">
+            <div class="cal-drawer-date" id="calDrawerDate"></div>
+            <div id="calDrawerBody"></div>
+          </div>
+        </div>
+      </div>
+
       <article class="panel is-primary">
-        <p class="panel-heading">Schedule</p>
-        <a class="panel-block has-background-link">
+        <p class="panel-heading has-text-centered">Schedule</p>
+        <a class="panel-block has-background-link has-text-white">
           May 1-3, 2026 — Fiesta Weekend<br>
           🌱<br>
           Optional, but we picked this date so you can experience T or
           C's biggest celebration: parade, rodeo, downtown fair, food, and music.
         </a>
-        <a class="panel-block has-background-link">
+        <a class="panel-block has-background-link has-text-white">
           May 7, 2026 — Gathering<br>
           🌿<br>
           For those who want to be part of the ceremony. Not quite a rehearsal dinner, but something special.
         </a>
-        <a class="panel-block has-background-link">
+        <a class="panel-block has-background-link has-text-white">
           May 8, 2026 — The Big Day<br>
           🌳<br>
           We get married. You watch. Then we all dance.<br><br>
         </a>
-        <a class="panel-block has-background-link">
+        <a class="panel-block has-background-link has-text-white">
           May 9, 2026 — Art Hop<br>
           🔥<br>
           Monthly celebration where galleries open 6-8pm. Walk around, see art, hear music, eat food. We want to share
           this special part of town with you.
         </a>
-        <a class="panel-block has-background-link">
+        <a class="panel-block has-background-link has-text-white">
           May 10, 2026 — The End<br>
           🪾<br>
           Just kidding, please never leave.
         </a>
       </article>
+
     </div>
   </section>
 
-  <section class="section">
-    <h2 class="title has-text-black has-text-centered">RSVP</h2>
+  <section class="section has-text-centered pb-2" id="find-us">
+    <h2 class="title has-text-black">Find Us</h2>
+    <div class="container is-max-desktop">
+      <iframe
+        src="https://www.google.com/maps/d/u/0/embed?mid=1hIei4z7d0lciAS9EyZvp49xALfpgUY0&ehbc=2E312F&noprof=1"
+        width="100%"
+        height="480"
+        style="border: none; border-radius: 8px;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+
+      <!-- Map Legend -->
+      <div class="map-legend mt-5">
+        <!-- Color key bar -->
+        <div class="legend-key">
+          <button class="legend-key-item" data-layer="our-hearts">
+            <span class="legend-dot" style="background:#C2185B;"></span>
+            <span>Our Hearts</span>
+          </button>
+          <button class="legend-key-item" data-layer="hotels">
+            <span class="legend-dot" style="background:#0F9D58;"></span>
+            <span>Hotels &amp; Stays</span>
+          </button>
+          <button class="legend-key-item" data-layer="soaks">
+            <span class="legend-dot" style="background:#0097A7;"></span>
+            <span>Soaks</span>
+          </button>
+          <button class="legend-key-item" data-layer="galleries">
+            <span class="legend-dot" style="background:#FFD600;"></span>
+            <span>Galleries &amp; Shops</span>
+          </button>
+          <button class="legend-key-item" data-layer="food">
+            <span class="legend-dot" style="background:#F57C00;"></span>
+            <span>Food &amp; Drink</span>
+          </button>
+          <button class="legend-key-item" data-layer="murals">
+            <span class="legend-dot" style="background:#C2185B; outline: 2px solid #7B1040; outline-offset: 2px;"></span>
+            <span>Kat's Murals</span>
+          </button>
+          <button class="legend-key-item" data-layer="outside">
+            <span class="legend-dot" style="background:#558B2F;"></span>
+            <span>Outside Fun</span>
+          </button>
+        </div>
+
+        <!-- Accordion panels -->
+        <div class="legend-accordions mt-4" style="text-align:left;">
+
+          <div class="legend-panel" id="layer-our-hearts">
+            <button class="legend-panel-header" data-target="our-hearts">
+              <span class="legend-dot" style="background:#C2185B;"></span>
+              <span>Our Hearts</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body is-open">
+              <div class="legend-pin">
+                <strong>Healing Waters Plaza</strong>
+                <p>This is where the ceremony will happen &lt;3</p>
+              </div>
+              <div class="legend-pin">
+                <strong>209 W 6th Ave</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>The Little Rock Heart</strong>
+                <p>Where we got married just us 12/17/25 &mdash; the spot where the photo on the invitations was taken. From here you can see all the places we love: the lake, the dam, town, Turtleback Mt., and the best sunrises and sunsets &lt;3</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-hotels">
+            <button class="legend-panel-header" data-target="hotels">
+              <span class="legend-dot" style="background:#0F9D58;"></span>
+              <span>Hotels &amp; Stays</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Charles Motel and Hotsprings</strong>
+                <p>This is where we will gather after the thing &lt;3</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Hot Springs Glamp Camp</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-soaks">
+            <button class="legend-panel-header" data-target="soaks">
+              <span class="legend-dot" style="background:#0097A7;"></span>
+              <span>Soaks</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Hoosier Hot Springs &amp; Inn</strong>
+                <p>Our favorite place to soak with incredible rooms.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Riverbend Hot Springs</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-galleries">
+            <button class="legend-panel-header" data-target="galleries">
+              <span class="legend-dot" style="background:#FFD600;"></span>
+              <span>Galleries &amp; Shops</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Truth or Consequences Contemporary</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Fuzzy Logic</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>El Cortez Theater</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Miner's Claim</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Snakestone Studios</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Emergence Healing and Expressive Arts Center</strong>
+                <p>Our dear friends own this sound space &mdash; one of the sneakiest hidden gems of T or C.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Black Cat Books and Coffee</strong>
+                <p>Great hang, local books and good quick snacks.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>RioBravoFineArt, Inc.</strong>
+                <p>Incredible art. Must go upstairs.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Uppa</strong>
+                <p>Funky gallery by our friends Andrew &amp; Christine.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Geronimo Springs Museum</strong>
+                <p>Must-see history of the area: native people, hot springs, the dam, and how the game show came to rename the town.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-food">
+            <button class="legend-panel-header" data-target="food">
+              <span class="legend-dot" style="background:#F57C00;"></span>
+              <span>Food &amp; Drink</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Ingo's Art Cafe</strong>
+                <p>One of the first places we went in town &amp; where we met our first friend, Ingo.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Passion Pie Cafe</strong>
+                <p>One of our favorite pastry and coffee spots.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Rama Bakery &amp; Cafe</strong>
+                <p>Our dear friend KK's bakery &amp; cafe.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Mile Marker 7 Coffee</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Kokopelli's Café</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Bullocks Grocery</strong>
+                <p>Our awesome local grocery store. Please support!</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Prickly Pear Coop (Fridge)</strong>
+                <p>Fresh local goodies and tasty dried snacks.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Ardie's Market</strong>
+                <p>Amazing family-owned ice cream shop.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Bigfoot Restaurant</strong>
+                <p>Our favorite restaurant &mdash; where we went after we got married in Dec 2025.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Linh's Rice and Noodles</strong>
+                <p>Great little food truck. Favorites: lemongrass chicken, mixed veggie with rice, and eggrolls.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Mexican Grill</strong>
+                <p>Amazing burritos, Navajo Tacos, tacos &mdash; yes, it's in a gas station = hidden gem!</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Truth or Consequences Brewing Co.</strong>
+                <p>Great place to meet up, bring snacks and play a board game. Great NA options (kombucha and hop water).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Outer Edge Pizzeria</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Sidekixx: Kitchen, Bar, &amp; Bowling</strong>
+                <p>Great pizza and bowling! You can wear your own shoes (if close-toed).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>A &amp; B Drive In</strong>
+                <p>Old school burgers &amp; fries.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-murals">
+            <button class="legend-panel-header" data-target="murals">
+              <span class="legend-dot" style="background:#C2185B; outline: 2px solid #7B1040; outline-offset: 2px;"></span>
+              <span>Kat's Murals</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Cat Tree Mural</strong>
+                <p>Inside Ingo's cafe. Kat's first mural in town, 2023. Black-light reactive cover-up honoring the previous concept with a new design.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>420 Event Space</strong>
+                <p>Outside &mdash; most recent mural 2025 for Ingo's dance / club space.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Glamp Camp Mural</strong>
+                <p>Outside wall directory mural. There's also a small cactus mural inside the office &mdash; ask the camp host to show you around.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Fibonacci Spiral</strong>
+                <p>Kat painted a Fibonacci spiral in the sound studio for Chris.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-outside">
+            <button class="legend-panel-header" data-target="outside">
+              <span class="legend-dot" style="background:#558B2F;"></span>
+              <span>Outside Fun</span>
+              <span class="legend-chevron">▾</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Rotary Park</strong>
+                <p>Where we take out after floating the river.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Ralph Edwards Park</strong>
+                <p>Great place to hang out in the grass or watch birds over the river. Saturday farmers market 7–10am (summer hours).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Elephant Butte Dam View</strong>
+                <p>See the historic dam site and THE Elephant Butte.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>State Park Entrance</strong>
+                <p>Drive right up to the water for beach time. Wear water shoes!</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Healing Waters Trail</strong>
+                <p>Great trail along the mesa with views of the mountain at sunset and river birds in the morning. Two parking areas (north and south ends of the loop).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Float Take Out</strong>
+                <p>Where we take out after floating the river.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end accordions -->
+      </div><!-- end map-legend -->
+    </div>
+  </section>
+
+  <section class="section pt-0" style="padding-bottom: 6rem;" id="rsvp">
+    <div class="has-text-centered">
+      <div class="rsvp-header">
+        <h2 class="title has-text-black mb-0"><span style="letter-spacing:0.1em">RS</span><span style="letter-spacing:0.25em">&thinsp;VP</span></h2>
+      </div>
+    </div>
     <p class="content has-text-black has-text-centered">
       Please RSVP to receive updates on accommodations, specific event times, and other important
       information as we finalize the plans.
@@ -200,28 +571,28 @@
       <div class="box has-background-primary mt-6">
         <form id="rsvpForm">
           <div class="field">
-            <label class="label">Name</label>
+            <label class="label has-text-white">Name</label>
             <div class="control">
-              <input class="input has-background-link" type="text" name="name" placeholder="Your full name" required>
+              <input class="input has-background-info has-text-white" type="text" name="name" placeholder="Your full name" required>
             </div>
           </div>
 
           <div class="field">
-            <label class="label">Email</label>
+            <label class="label has-text-white">Email</label>
             <div class="control">
-              <input class="input has-background-link" type="email" name="email" placeholder="your@email.com" required>
+              <input class="input has-background-info has-text-white" type="email" name="email" placeholder="your@email.com" required>
             </div>
           </div>
 
           <div class="field">
-            <label class="label">Number of Guests</label>
+            <label class="label has-text-white">Number of Guests</label>
             <div class="control">
-              <input class="input has-background-link" type="number" name="guests" min="1" value="1" required>
+              <input class="input has-background-info has-text-white" type="number" name="guests" min="1" value="1" required>
             </div>
           </div>
 
           <div class="field">
-            <label class="label">Planning to Attend?</label>
+            <label class="label has-text-white">Planning to Attend?</label>
             <div class="control">
               <label class="radio has-text-white">
                 <input type="radio" name="attending" value="Yes" required>
@@ -230,6 +601,10 @@
               <label class="radio has-text-white">
                 <input type="radio" name="attending" value="Maybe">
                 Maybe
+              </label>
+              <label class="radio has-text-white">
+                <input type="radio" name="attending" value="No">
+                No
               </label>
             </div>
           </div>
@@ -321,6 +696,153 @@
       cactusImage.style.transform = `rotate(${rotation}deg)`;
       cactusTicking = false;
     }
+  </script>
+
+  <script>
+    // ── Full Calendar ──
+    const calDayData = {
+      1:  { date: 'Friday, May 1',    body: 'Fiesta Weekend begins — parade, rodeo, downtown fair, food, and music. Optional, but a wonderful way to kick off the week in T or C.' },
+      2:  { date: 'Saturday, May 2',  body: 'Fiesta Weekend continues. Enjoy the celebrations around town.' },
+      3:  { date: 'Sunday, May 3',    body: 'Final day of Fiesta Weekend. Soak it in before the week begins.' },
+      4:  { date: 'Monday, May 4',    body: 'Details coming soon.' },
+      5:  { date: 'Tuesday, May 5',   body: 'Details coming soon.' },
+      6:  { date: 'Wednesday, May 6', body: 'Details coming soon.' },
+      7:  { date: 'Thursday, May 7',  body: 'Pre-ceremony Gathering — for those who want to be part of the ceremony. Not quite a rehearsal dinner, but something special. Time: TBD.' },
+      8:  { date: 'Friday, May 8',    body: 'The Big Day — Ceremony + Reception. We get married. You watch. Then we all dance. Time: TBD.' },
+      9:  { date: 'Saturday, May 9',  body: 'Art Hop — a monthly T or C tradition. Galleries open 6–8pm. Walk around, see art, hear music, eat food. We want to share this special part of town with you.' },
+      10: { date: 'Sunday, May 10',   body: 'The End. Just kidding, please never leave.' },
+    };
+
+    const calToggleBtn = document.getElementById('calToggleBtn');
+    const calWrap = document.getElementById('calWrap');
+    const calDrawer = document.getElementById('calDrawer');
+    const calDrawerDate = document.getElementById('calDrawerDate');
+    const calDrawerBody = document.getElementById('calDrawerBody');
+    let selectedDay = null;
+
+    calToggleBtn.addEventListener('click', () => {
+      const isOpen = calWrap.classList.toggle('is-open');
+      calToggleBtn.classList.toggle('is-open', isOpen);
+      if (!isOpen) {
+        calDrawer.classList.remove('is-open');
+        document.querySelectorAll('.cal-cell.is-selected').forEach(c => c.classList.remove('is-selected'));
+        selectedDay = null;
+      }
+    });
+
+    document.querySelectorAll('.cal-cell:not(.is-empty):not(.is-muted)').forEach(cell => {
+      cell.addEventListener('click', () => {
+        const day = parseInt(cell.getAttribute('data-day'));
+        const data = calDayData[day];
+        if (!data) return;
+
+        if (selectedDay === day) {
+          // Close drawer if same day clicked
+          calDrawer.classList.remove('is-open');
+          cell.classList.remove('is-selected');
+          selectedDay = null;
+          return;
+        }
+
+        // Update drawer content
+        calDrawerDate.textContent = data.date;
+        calDrawerBody.textContent = data.body;
+
+        // Update selected state
+        document.querySelectorAll('.cal-cell.is-selected').forEach(c => c.classList.remove('is-selected'));
+        cell.classList.add('is-selected');
+        selectedDay = day;
+
+        calDrawer.classList.add('is-open');
+      });
+    });
+  </script>
+
+  <script>
+    // ── Section Nav: hide on scroll down, show on scroll up ──
+    const sectionNav = document.getElementById('section-nav');
+    let lastNavScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+      const currentY = window.scrollY;
+      if (currentY > lastNavScrollY && currentY > 800) {
+        sectionNav.classList.add('is-hidden');
+      } else {
+        sectionNav.classList.remove('is-hidden');
+      }
+      lastNavScrollY = currentY;
+    }, { passive: true });
+
+    // ── Section Nav: active tab on scroll ──
+    const navSections = ['getting-there', 'in-town', 'why-torc', 'schedule', 'find-us', 'rsvp'];
+    const navTabs = {};
+    navSections.forEach(id => {
+      navTabs[id] = document.querySelector(`.nav-tab[href="#${id}"]`);
+    });
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navSections.forEach(id => navTabs[id] && navTabs[id].classList.remove('is-active'));
+          const activeTab = navTabs[entry.target.id];
+          if (activeTab) activeTab.classList.add('is-active');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    navSections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) navObserver.observe(el);
+    });
+
+    // ── Section Nav: smooth scroll on tab click ──
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(tab.getAttribute('href'));
+        if (target) {
+          const offset = sectionNav.offsetHeight + 8;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+  <script>
+    // Map Legend accordion
+    function toggleLayer(layerId) {
+      const panel = document.getElementById('layer-' + layerId);
+      if (!panel) return;
+      const body = panel.querySelector('.legend-panel-body');
+      const header = panel.querySelector('.legend-panel-header');
+      const isOpen = body.classList.contains('is-open');
+      body.classList.toggle('is-open', !isOpen);
+      header.classList.toggle('is-open', !isOpen);
+    }
+
+    // Panel header clicks
+    document.querySelectorAll('.legend-panel-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        toggleLayer(target);
+      });
+    });
+
+    // Color key dot clicks — scroll to panel and expand
+    document.querySelectorAll('.legend-key-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const layerId = btn.getAttribute('data-layer');
+        const panel = document.getElementById('layer-' + layerId);
+        if (!panel) return;
+        const body = panel.querySelector('.legend-panel-body');
+        const header = panel.querySelector('.legend-panel-header');
+        // Always open on key click
+        body.classList.add('is-open');
+        header.classList.add('is-open');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
   </script>
 
   <script>

@@ -1,14 +1,13 @@
-/* Import Google Fonts - add this to your HTML <head> or at the top of your CSS */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Pinyon+Script&display=swap');
 
 :root {
   --bulma-primary-h: 137deg;
   --bulma-primary-s: 21%;
   --bulma-primary-l: 30%;
   --bulma-primary-invert-l: 100%;
-  --bulma-link-h: 321deg;
-  --bulma-link-s: 19%;
-  --bulma-link-l: 35%;
+  --bulma-link-h: 8deg;
+  --bulma-link-s: 48%;
+  --bulma-link-l: 42%;
   --bulma-link-invert-l: 100%;
   --bulma-info-h: 132deg;
   --bulma-info-s: 18%;
@@ -30,8 +29,8 @@
   --bulma-scheme-s: 35%;
   --bulma-scheme-main-l: 84%;
   --bulma-text-l: 29%;
-  --bulma-family-primary: 'Merriweather', serif;
-  --bulma-body-family: 'Merriweather', serif;
+  --bulma-family-primary: 'Tinos', serif;
+  --bulma-body-family: 'Tinos', serif;
   --bulma-family-code: Inconsolata, Hack, SF Mono, Roboto Mono, Source Code Pro, Ubuntu Mono, monospace;
   --bulma-code-family: Inconsolata, Hack, SF Mono, Roboto Mono, Source Code Pro, Ubuntu Mono, monospace;
   --bulma-size-normal: 18px;
@@ -42,4 +41,331 @@
   --bulma-radius-medium: 8px;
   --bulma-radius-large: 12px;
   --bulma-block-spacing: 1.5rem;
+}
+
+body {
+  font-weight: 400;
+}
+
+.section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.date-text {
+  font-family: 'Tinos', serif !important;
+  font-size: 2rem;
+  font-style: italic;
+}
+
+.location-text {
+  font-family: 'Tinos', serif !important;
+  font-size: 1.25rem;
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6,
+.title, .panel-heading,
+.is-size-1, .is-size-2 {
+  font-family: 'Pinyon Script', cursive !important;
+  font-weight: 400 !important;
+  font-size: 2.5rem !important;
+  -webkit-text-stroke: 0.6px currentColor;
+}
+
+h1, .is-size-1 {
+  font-size: 4.5rem !important;
+}
+
+.is-size-3 {
+  font-family: 'Pinyon Script', cursive !important;
+  font-weight: 400 !important;
+  font-size: 3.5rem !important;
+  -webkit-text-stroke: 0.6px currentColor;
+}
+
+/* ── Full Calendar ── */
+.cal-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Tinos', serif;
+  font-size: 1.4rem;
+  color: hsl(8, 48%, 42%);
+  padding: 0.75rem 0.5rem 0.5rem;
+  display: block;
+  margin: 0 auto;
+  transition: opacity 0.15s;
+}
+
+.cal-toggle-btn:hover {
+  opacity: 0.75;
+}
+
+.cal-toggle-btn .cal-toggle-chevron {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.cal-toggle-btn.is-open .cal-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+.cal-wrap {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
+}
+
+.cal-wrap.is-open {
+  max-height: 800px;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 1rem;
+}
+
+.cal-dow {
+  text-align: center;
+  font-family: 'Tinos', serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  padding-bottom: 0.25rem;
+}
+
+.cal-cell {
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 6px;
+  min-height: 80px;
+  padding: 0.35rem 0.4rem;
+  cursor: pointer;
+  background: rgba(255,255,255,0.35);
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.cal-cell:hover {
+  background: rgba(255,255,255,0.6);
+}
+
+.cal-cell.is-empty {
+  border-color: transparent;
+  background: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+.cal-cell.is-highlight {
+  border: 2px solid hsl(8, 48%, 42%);
+  background: rgba(255,255,255,0.5);
+}
+
+.cal-cell.is-selected {
+  background: rgba(255,255,255,0.75);
+}
+
+.cal-cell.is-muted {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.cal-date {
+  font-family: 'Tinos', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.cal-label {
+  font-family: 'Tinos', serif;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.cal-drawer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.cal-drawer.is-open {
+  max-height: 300px;
+}
+
+.cal-drawer-inner {
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 0.85rem 1.1rem;
+  background: rgba(255,255,255,0.45);
+  font-family: 'Tinos', serif;
+  font-size: 0.95rem;
+}
+
+.cal-drawer-date {
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: hsl(8, 48%, 42%);
+}
+
+/* ── RSVP Outlined Header ── */
+.rsvp-header {
+  display: inline-block;
+  border: 2px solid hsl(8, 48%, 42%);
+  border-radius: 8px;
+  padding: 0.75rem 5rem;
+  margin-bottom: 1rem;
+}
+
+
+
+/* ── Section Nav Bar ── */
+#section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  background-color: hsl(44, 35%, 84%);
+  border-top: 1px solid hsl(8, 30%, 65%);
+  border-bottom: 1px solid hsl(8, 30%, 65%);
+  padding: 0 0.5rem;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+#section-nav.is-hidden {
+  transform: translateY(-110%);
+}
+
+.nav-tab {
+  font-family: 'Tinos', serif;
+  font-size: 1.05rem;
+  color: hsl(8, 30%, 30%);
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.nav-tab:hover {
+  color: hsl(8, 48%, 42%);
+  border-bottom-color: hsl(8, 48%, 42%);
+}
+
+.nav-tab.is-active {
+  color: hsl(8, 48%, 42%);
+  border-bottom-color: hsl(8, 48%, 42%);
+  font-weight: 700;
+}
+
+/* ── Map Legend ── */
+.legend-key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.legend-key-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Tinos', serif;
+  font-size: 0.95rem;
+  color: inherit;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: opacity 0.15s;
+}
+
+.legend-key-item:hover {
+  opacity: 0.75;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-accordions {
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.legend-panel {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.legend-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Tinos', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.65rem 0.25rem;
+  text-align: left;
+  color: inherit;
+  transition: opacity 0.15s;
+}
+
+.legend-panel-header:hover {
+  opacity: 0.75;
+}
+
+.legend-chevron {
+  margin-left: auto;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.legend-panel-header.is-open .legend-chevron {
+  transform: rotate(180deg);
+}
+
+.legend-panel-body {
+  display: none;
+  padding: 0 0.5rem 0.75rem 1.75rem;
+}
+
+.legend-panel-body.is-open {
+  display: block;
+}
+
+.legend-pin {
+  margin-bottom: 0.6rem;
+}
+
+.legend-pin strong {
+  font-family: 'Tinos', serif;
+  font-size: 0.95rem;
+}
+
+.legend-pin p {
+  font-size: 0.85rem;
+  margin: 0.1rem 0 0 0;
+  opacity: 0.8;
+  font-style: italic;
 }
