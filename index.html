@@ -119,6 +119,7 @@
     <a href="#schedule" class="nav-tab">Schedule</a>
     <a href="#find-us" class="nav-tab">Find Us</a>
     <a href="#rsvp" class="nav-tab">RSVP</a>
+    <a href="registry.html" class="nav-tab">Registry</a>
   </nav>
 
   <section class="section has-text-centered" id="getting-there">
@@ -906,8 +907,10 @@
     // ── Section Nav: smooth scroll on tab click ──
     document.querySelectorAll('.nav-tab').forEach(tab => {
       tab.addEventListener('click', e => {
+        const href = tab.getAttribute('href');
+        if (!href.startsWith('#')) return; // allow normal navigation for external links
         e.preventDefault();
-        const target = document.querySelector(tab.getAttribute('href'));
+        const target = document.querySelector(href);
         if (target) {
           const offset = sectionNav.offsetHeight + 8;
           const top = target.getBoundingClientRect().top + window.scrollY - offset;

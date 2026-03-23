@@ -418,3 +418,55 @@ h1, .is-size-1 {
   opacity: 0.8;
   font-style: italic;
 }
+
+/* ── Registry Cards ── */
+.registry-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid hsl(137, 21%, 30%);
+  border-radius: 12px;
+  padding: 2rem 1.75rem;
+  height: 100%;
+}
+
+.registry-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.registry-card-divider {
+  width: 50px;
+  height: 2px;
+  background: hsl(8, 48%, 42%);
+  border-radius: 2px;
+  margin: 0.5rem auto 1.25rem;
+}
+
+.registry-card-body {
+  font-family: 'Tinos', serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  font-style: italic;
+  color: hsl(8, 20%, 25%);
+  margin-bottom: 1.75rem;
+  flex-grow: 1;
+}
+
+.registry-contribute-btn {
+  font-family: 'Tinos', serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  padding: 0.65rem 2rem;
+  border-radius: 8px;
+  margin-top: auto;
+}
+
+.registry-footer-note {
+  font-family: 'Tinos', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 2rem;
+  padding-bottom: 2rem;
+}
