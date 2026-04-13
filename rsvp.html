@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drew & Kathryn | RSVP</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .cactus-anchor {
+      position: fixed;
+      bottom: 0;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cactus-image {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cactus-anchor">
+    <img src="barrel_cactus.svg" alt="Decorative barrel cactus" class="cactus-image" />
+  </div>
+
+  <!-- Nav -->
+  <nav class="page-nav">
+    <a href="index.html" class="page-nav-back">&larr; Home</a>
+    <span class="page-nav-title">RSVP</span>
+  </nav>
+
+  <!-- RSVP -->
+  <section class="section fade-in" style="padding-bottom: 6rem;" id="rsvp">
+    <p class="content has-text-black has-text-centered">
+      Please RSVP to receive updates on accommodations, specific event times, and other important
+      information as we finalize the plans.
+    </p>
+    <div class="container is-max-tablet">
+      <div class="box has-background-primary mt-6">
+        <form id="rsvpForm">
+          <div class="field">
+            <label class="label has-text-white">Name</label>
+            <div class="control">
+              <input class="input has-background-info has-text-white" type="text" name="name" placeholder="Your full name" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label has-text-white">Email</label>
+            <div class="control">
+              <input class="input has-background-info has-text-white" type="email" name="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label has-text-white">Number of Guests</label>
+            <div class="control">
+              <input class="input has-background-info has-text-white" type="number" name="guests" min="1" value="1" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label has-text-white">Planning to Attend?</label>
+            <div class="control">
+              <label class="radio has-text-white">
+                <input type="radio" name="attending" value="Yes" required>
+                Yes
+              </label>
+              <label class="radio has-text-white">
+                <input type="radio" name="attending" value="Maybe">
+                Maybe
+              </label>
+              <label class="radio has-text-white">
+                <input type="radio" name="attending" value="No">
+                No
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control has-text-centered">
+              <button type="submit" class="button is-link is-medium">Submit RSVP</button>
+            </div>
+          </div>
+
+          <div id="formMessage" class="notification is-hidden"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP Form JS -->
+  <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0PzsMdqq8GwAZvIHHXgmUl1xw1dvpLnf-A-jRYReEgw-5hEyGW6nt9KAfc-8XbbOy/exec';
+
+    document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        guests: formData.get('guests'),
+        attending: formData.get('attending')
+      };
+
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      const messageDiv = document.getElementById('formMessage');
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+      messageDiv.classList.add('is-hidden');
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+
+        messageDiv.textContent = 'Thank you! Your RSVP has been received.';
+        messageDiv.className = 'notification is-success';
+        e.target.reset();
+
+      } catch (error) {
+        messageDiv.textContent = 'Something went wrong. Please try again or email us directly.';
+        messageDiv.className = 'notification is-danger';
+      }
+
+      submitButton.disabled = false;
+      submitButton.textContent = 'Submit RSVP';
+    });
+  </script>
+
+  <!-- Fade-in on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-in');
+      items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), 100 * i);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

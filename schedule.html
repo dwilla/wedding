@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drew & Kathryn | Schedule</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .cactus-anchor {
+      position: fixed;
+      bottom: 0;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cactus-image {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cactus-anchor">
+    <img src="barrel_cactus.svg" alt="Decorative barrel cactus" class="cactus-image" />
+  </div>
+
+  <!-- Nav -->
+  <nav class="page-nav">
+    <a href="index.html" class="page-nav-back">&larr; Home</a>
+    <span class="page-nav-title">Schedule</span>
+  </nav>
+
+  <!-- Schedule -->
+  <section class="section has-background-info-75 fade-in" id="schedule">
+    <div class="container is-max-tablet">
+
+      <!-- Full Calendar toggle -->
+      <div class="has-text-centered mt-3">
+        <button class="cal-toggle-btn" id="calToggleBtn">
+          View Full Calendar <span class="cal-toggle-chevron">&#9662;</span>
+        </button>
+      </div>
+
+      <div class="cal-wrap" id="calWrap">
+        <!-- Day-of-week headers -->
+        <div class="cal-grid">
+          <div class="cal-dow">Thu</div>
+          <div class="cal-dow">Fri</div>
+          <div class="cal-dow">Sat</div>
+          <div class="cal-dow">Sun</div>
+          <div class="cal-dow">Mon</div>
+          <div class="cal-dow">Tue</div>
+          <div class="cal-dow">Wed</div>
+
+          <!-- Row 1: empty Thu, then May 1-6 -->
+          <div class="cal-cell is-empty"></div>
+          <div class="cal-cell" data-day="1">
+            <span class="cal-date">1</span>
+            <span class="cal-label">Fiesta Weekend</span>
+          </div>
+          <div class="cal-cell" data-day="2">
+            <span class="cal-date">2</span>
+            <span class="cal-label">Fiesta Weekend</span>
+          </div>
+          <div class="cal-cell" data-day="3">
+            <span class="cal-date">3</span>
+            <span class="cal-label">Fiesta Weekend</span>
+          </div>
+          <div class="cal-cell is-muted" data-day="4">
+            <span class="cal-date">4</span>
+            <span class="cal-label">Details coming soon</span>
+          </div>
+          <div class="cal-cell is-muted" data-day="5">
+            <span class="cal-date">5</span>
+            <span class="cal-label">Details coming soon</span>
+          </div>
+          <div class="cal-cell is-muted" data-day="6">
+            <span class="cal-date">6</span>
+            <span class="cal-label">Details coming soon</span>
+          </div>
+
+          <!-- Row 2: May 7-10, then empty cells -->
+          <div class="cal-cell" data-day="7">
+            <span class="cal-date">7</span>
+            <span class="cal-label">Gathering</span>
+          </div>
+          <div class="cal-cell is-highlight" data-day="8">
+            <span class="cal-date">8</span>
+            <span class="cal-label">The Big Day &#128141;</span>
+          </div>
+          <div class="cal-cell" data-day="9">
+            <span class="cal-date">9</span>
+            <span class="cal-label">Art Hop</span>
+          </div>
+          <div class="cal-cell" data-day="10">
+            <span class="cal-date">10</span>
+            <span class="cal-label">The End</span>
+          </div>
+          <div class="cal-cell is-empty"></div>
+          <div class="cal-cell is-empty"></div>
+          <div class="cal-cell is-empty"></div>
+        </div>
+
+        <!-- Detail drawer -->
+        <div class="cal-drawer" id="calDrawer">
+          <div class="cal-drawer-inner">
+            <div class="cal-drawer-date" id="calDrawerDate"></div>
+            <div id="calDrawerBody"></div>
+          </div>
+        </div>
+      </div>
+
+      <article class="panel is-primary">
+        <p class="panel-heading has-text-centered">Schedule</p>
+        <a class="panel-block has-background-link has-text-white">
+          May 1-3, 2026 — Fiesta Weekend<br>
+          &#127793;<br>
+          Optional, but we picked this date so you can experience T or
+          C's biggest celebration: parade, rodeo, downtown fair, food, and music.
+        </a>
+        <a class="panel-block has-background-link has-text-white">
+          May 7, 2026 — Gathering<br>
+          &#127807;<br>
+          For those who want to be part of the ceremony. Not quite a rehearsal dinner, but something special.
+        </a>
+        <a class="panel-block has-background-link has-text-white">
+          May 8, 2026 — The Big Day<br>
+          &#127795;<br>
+          We get married. You watch. Then we all dance.<br><br>
+        </a>
+        <a class="panel-block has-background-link has-text-white">
+          May 9, 2026 — Art Hop<br>
+          &#128293;<br>
+          Monthly celebration where galleries open 6-8pm. Walk around, see art, hear music, eat food. We want to share
+          this special part of town with you.
+        </a>
+        <a class="panel-block has-background-link has-text-white">
+          May 10, 2026 — The End<br>
+          &#129726;<br>
+          Just kidding, please never leave.
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Calendar JS -->
+  <script>
+    const calDayData = {
+      1:  { date: 'Friday, May 1',    body: 'Fiesta Weekend begins \u2014 parade, rodeo, downtown fair, food, and music. Optional, but a wonderful way to kick off the week in T or C.' },
+      2:  { date: 'Saturday, May 2',  body: 'Fiesta Weekend continues. Enjoy the celebrations around town.' },
+      3:  { date: 'Sunday, May 3',    body: 'Final day of Fiesta Weekend. Soak it in before the week begins.' },
+      4:  { date: 'Monday, May 4',    body: 'Details coming soon.' },
+      5:  { date: 'Tuesday, May 5',   body: 'Details coming soon.' },
+      6:  { date: 'Wednesday, May 6', body: 'Details coming soon.' },
+      7:  { date: 'Thursday, May 7',  body: 'Pre-ceremony Gathering \u2014 for those who want to be part of the ceremony. Not quite a rehearsal dinner, but something special. Time: TBD.' },
+      8:  { date: 'Friday, May 8',    body: 'The Big Day \u2014 Ceremony + Reception. We get married. You watch. Then we all dance. Time: TBD.' },
+      9:  { date: 'Saturday, May 9',  body: 'Art Hop \u2014 a monthly T or C tradition. Galleries open 6\u20138pm. Walk around, see art, hear music, eat food. We want to share this special part of town with you.' },
+      10: { date: 'Sunday, May 10',   body: 'The End. Just kidding, please never leave.' },
+    };
+
+    const calToggleBtn = document.getElementById('calToggleBtn');
+    const calWrap = document.getElementById('calWrap');
+    const calDrawer = document.getElementById('calDrawer');
+    const calDrawerDate = document.getElementById('calDrawerDate');
+    const calDrawerBody = document.getElementById('calDrawerBody');
+    let selectedDay = null;
+
+    calToggleBtn.addEventListener('click', () => {
+      const isOpen = calWrap.classList.toggle('is-open');
+      calToggleBtn.classList.toggle('is-open', isOpen);
+      if (!isOpen) {
+        calDrawer.classList.remove('is-open');
+        document.querySelectorAll('.cal-cell.is-selected').forEach(c => c.classList.remove('is-selected'));
+        selectedDay = null;
+      }
+    });
+
+    document.querySelectorAll('.cal-cell:not(.is-empty):not(.is-muted)').forEach(cell => {
+      cell.addEventListener('click', () => {
+        const day = parseInt(cell.getAttribute('data-day'));
+        const data = calDayData[day];
+        if (!data) return;
+
+        if (selectedDay === day) {
+          calDrawer.classList.remove('is-open');
+          cell.classList.remove('is-selected');
+          selectedDay = null;
+          return;
+        }
+
+        calDrawerDate.textContent = data.date;
+        calDrawerBody.textContent = data.body;
+
+        document.querySelectorAll('.cal-cell.is-selected').forEach(c => c.classList.remove('is-selected'));
+        cell.classList.add('is-selected');
+        selectedDay = day;
+
+        calDrawer.classList.add('is-open');
+      });
+    });
+  </script>
+
+  <!-- Fade-in on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-in');
+      items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), 100 * i);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

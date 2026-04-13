@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drew & Kathryn | Photos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .cactus-anchor {
+      position: fixed;
+      bottom: 0;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cactus-image {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cactus-anchor">
+    <img src="barrel_cactus.svg" alt="Decorative barrel cactus" class="cactus-image" />
+  </div>
+
+  <!-- Nav -->
+  <nav class="page-nav">
+    <a href="index.html" class="page-nav-back">&larr; Home</a>
+    <span class="page-nav-title">Photos</span>
+  </nav>
+
+  <!-- Photos -->
+  <section class="section has-text-centered fade-in" id="photos">
+    <p class="content has-text-black is-size-6">
+      Share your photos from the celebration! Upload here and they'll be added to our shared collection.
+    </p>
+    <div class="container is-max-tablet">
+      <div class="box has-background-primary mt-4">
+        <form id="photoForm">
+          <div class="field">
+            <label class="label has-text-white">Your Name <span style="font-weight:400;font-size:0.85rem;">(optional)</span></label>
+            <div class="control">
+              <input class="input has-background-info has-text-white" type="text" name="uploaderName" placeholder="e.g. Sarah, The Johnsons">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label has-text-white">Select Photos</label>
+            <div class="control">
+              <div class="photo-drop-zone" id="photoDropZone">
+                <p class="has-text-white">Drag photos here or tap to browse</p>
+                <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;">
+              </div>
+            </div>
+          </div>
+
+          <div id="photoPreviewArea" class="photo-preview-area"></div>
+
+          <div class="field mt-4">
+            <div class="control has-text-centered">
+              <button type="submit" class="button is-link is-medium" id="photoSubmitBtn" disabled>Upload Photos</button>
+            </div>
+          </div>
+
+          <div id="photoProgress" class="mt-3 is-hidden">
+            <progress class="progress is-link" id="photoProgressBar" value="0" max="100">0%</progress>
+            <p class="has-text-white has-text-centered is-size-7" id="photoProgressText"></p>
+          </div>
+
+          <div id="photoFormMessage" class="notification is-hidden mt-3"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Upload JS -->
+  <script>
+    const PHOTO_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx8SYAkLGq-pIvQXtnwsXXdy88x9vou6NLl8kLCdeoyK-KGKQuNH-Izj8wGHKjSNphNpw/exec';
+
+    const photoForm = document.getElementById('photoForm');
+    const photoFileInput = document.getElementById('photoFileInput');
+    const photoDropZone = document.getElementById('photoDropZone');
+    const photoPreviewArea = document.getElementById('photoPreviewArea');
+    const photoSubmitBtn = document.getElementById('photoSubmitBtn');
+    const photoProgress = document.getElementById('photoProgress');
+    const photoProgressBar = document.getElementById('photoProgressBar');
+    const photoProgressText = document.getElementById('photoProgressText');
+    const photoFormMessage = document.getElementById('photoFormMessage');
+
+    let selectedFiles = [];
+
+    // Click to browse
+    photoDropZone.addEventListener('click', () => photoFileInput.click());
+
+    // Drag & drop
+    photoDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      photoDropZone.classList.add('is-dragover');
+    });
+    photoDropZone.addEventListener('dragleave', () => {
+      photoDropZone.classList.remove('is-dragover');
+    });
+    photoDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      photoDropZone.classList.remove('is-dragover');
+      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+      addFiles(files);
+    });
+
+    // File input change
+    photoFileInput.addEventListener('change', () => {
+      addFiles(Array.from(photoFileInput.files));
+      photoFileInput.value = '';
+    });
+
+    function addFiles(files) {
+      selectedFiles = selectedFiles.concat(files);
+      renderPreviews();
+      photoSubmitBtn.disabled = selectedFiles.length === 0;
+    }
+
+    function removeFile(index) {
+      selectedFiles.splice(index, 1);
+      renderPreviews();
+      photoSubmitBtn.disabled = selectedFiles.length === 0;
+    }
+
+    function renderPreviews() {
+      photoPreviewArea.innerHTML = '';
+      selectedFiles.forEach((file, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'photo-preview-item';
+
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'photo-preview-remove';
+        removeBtn.textContent = '\u00D7';
+        removeBtn.addEventListener('click', () => removeFile(i));
+
+        wrap.appendChild(img);
+        wrap.appendChild(removeBtn);
+        photoPreviewArea.appendChild(wrap);
+      });
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadBatch(files, uploaderName) {
+      const fileData = await Promise.all(files.map(async (f) => ({
+        data: await fileToBase64(f),
+        name: f.name,
+        type: f.type,
+      })));
+
+      await fetch(PHOTO_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          uploaderName: uploaderName,
+          files: fileData,
+        }),
+      });
+    }
+
+    photoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (selectedFiles.length === 0) return;
+
+      const uploaderName = photoForm.querySelector('[name="uploaderName"]').value || 'Anonymous';
+      photoSubmitBtn.disabled = true;
+      photoSubmitBtn.classList.add('is-loading');
+      photoFormMessage.classList.add('is-hidden');
+      photoProgress.classList.remove('is-hidden');
+      photoProgressText.textContent = 'Preparing upload...';
+
+      try {
+        const total = selectedFiles.length;
+        for (let i = 0; i < total; i++) {
+          photoProgressText.textContent = `Uploading photo ${i + 1} of ${total}...`;
+          photoProgressBar.value = Math.round(((i + 1) / total) * 100);
+          await uploadBatch([selectedFiles[i]], uploaderName);
+        }
+
+        photoProgressBar.value = 100;
+        photoProgressText.textContent = `All ${total} photo${total > 1 ? 's' : ''} uploaded!`;
+
+        photoFormMessage.textContent = `Thanks, ${uploaderName}! ${total} photo${total > 1 ? 's' : ''} uploaded successfully.`;
+        photoFormMessage.className = 'notification is-success mt-3';
+
+        selectedFiles = [];
+        renderPreviews();
+        photoForm.querySelector('[name="uploaderName"]').value = '';
+
+      } catch (err) {
+        photoFormMessage.textContent = 'Something went wrong. Please try again.';
+        photoFormMessage.className = 'notification is-danger mt-3';
+      }
+
+      photoSubmitBtn.classList.remove('is-loading');
+      photoSubmitBtn.disabled = selectedFiles.length > 0 ? false : true;
+      setTimeout(() => { photoProgress.classList.add('is-hidden'); }, 3000);
+    });
+  </script>
+
+  <!-- Fade-in on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-in');
+      items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), 100 * i);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drew & Kathryn | Explore</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    .cactus-anchor {
+      position: fixed;
+      bottom: 0;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cactus-image {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cactus-anchor">
+    <img src="barrel_cactus.svg" alt="Decorative barrel cactus" class="cactus-image" />
+  </div>
+
+  <!-- Nav -->
+  <nav class="page-nav">
+    <a href="index.html" class="page-nav-back">&larr; Home</a>
+    <span class="page-nav-title">Explore</span>
+  </nav>
+
+  <!-- Explore -->
+  <section class="section has-text-centered pb-2 fade-in" id="explore">
+    <div class="container is-max-desktop">
+      <iframe
+        src="https://www.google.com/maps/d/u/0/embed?mid=1hIei4z7d0lciAS9EyZvp49xALfpgUY0&ehbc=2E312F&noprof=1"
+        width="100%"
+        height="480"
+        style="border: none; border-radius: 8px;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+
+      <!-- Map Legend -->
+      <div class="map-legend mt-5">
+        <!-- Color key bar -->
+        <div class="legend-key">
+          <button class="legend-key-item" data-layer="our-hearts">
+            <span class="legend-dot" style="background:#C2185B;"></span>
+            <span>Our Hearts</span>
+          </button>
+          <button class="legend-key-item" data-layer="hotels">
+            <span class="legend-dot" style="background:#0F9D58;"></span>
+            <span>Hotels &amp; Stays</span>
+          </button>
+          <button class="legend-key-item" data-layer="soaks">
+            <span class="legend-dot" style="background:#0097A7;"></span>
+            <span>Soaks</span>
+          </button>
+          <button class="legend-key-item" data-layer="galleries">
+            <span class="legend-dot" style="background:#FFD600;"></span>
+            <span>Galleries &amp; Shops</span>
+          </button>
+          <button class="legend-key-item" data-layer="food">
+            <span class="legend-dot" style="background:#F57C00;"></span>
+            <span>Food &amp; Drink</span>
+          </button>
+          <button class="legend-key-item" data-layer="murals">
+            <span class="legend-dot" style="background:#C2185B; outline: 2px solid #7B1040; outline-offset: 2px;"></span>
+            <span>Kat's Murals</span>
+          </button>
+          <button class="legend-key-item" data-layer="outside">
+            <span class="legend-dot" style="background:#558B2F;"></span>
+            <span>Outside Fun</span>
+          </button>
+        </div>
+
+        <!-- Accordion panels -->
+        <div class="legend-accordions mt-4" style="text-align:left;">
+
+          <div class="legend-panel" id="layer-our-hearts">
+            <button class="legend-panel-header" data-target="our-hearts">
+              <span class="legend-dot" style="background:#C2185B;"></span>
+              <span>Our Hearts</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body is-open">
+              <div class="legend-pin">
+                <strong>Healing Waters Plaza</strong>
+                <p>This is where the ceremony will happen &lt;3</p>
+              </div>
+              <div class="legend-pin">
+                <strong>209 W 6th Ave</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>The Little Rock Heart</strong>
+                <p>Where we got married just us 12/17/25 &mdash; the spot where the photo on the invitations was taken. From here you can see all the places we love: the lake, the dam, town, Turtleback Mt., and the best sunrises and sunsets &lt;3</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-hotels">
+            <button class="legend-panel-header" data-target="hotels">
+              <span class="legend-dot" style="background:#0F9D58;"></span>
+              <span>Hotels &amp; Stays</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Charles Motel and Hotsprings</strong>
+                <p>This is where we will gather after the thing &lt;3</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Hot Springs Glamp Camp</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-soaks">
+            <button class="legend-panel-header" data-target="soaks">
+              <span class="legend-dot" style="background:#0097A7;"></span>
+              <span>Soaks</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Hoosier Hot Springs &amp; Inn</strong>
+                <p>Our favorite place to soak with incredible rooms.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Riverbend Hot Springs</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-galleries">
+            <button class="legend-panel-header" data-target="galleries">
+              <span class="legend-dot" style="background:#FFD600;"></span>
+              <span>Galleries &amp; Shops</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Truth or Consequences Contemporary</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Fuzzy Logic</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>El Cortez Theater</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Miner's Claim</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Snakestone Studios</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Emergence Healing and Expressive Arts Center</strong>
+                <p>Our dear friends own this sound space &mdash; one of the sneakiest hidden gems of T or C.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Black Cat Books and Coffee</strong>
+                <p>Great hang, local books and good quick snacks.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>RioBravoFineArt, Inc.</strong>
+                <p>Incredible art. Must go upstairs.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Uppa</strong>
+                <p>Funky gallery by our friends Andrew &amp; Christine.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Geronimo Springs Museum</strong>
+                <p>Must-see history of the area: native people, hot springs, the dam, and how the game show came to rename the town.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-food">
+            <button class="legend-panel-header" data-target="food">
+              <span class="legend-dot" style="background:#F57C00;"></span>
+              <span>Food &amp; Drink</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Ingo's Art Cafe</strong>
+                <p>One of the first places we went in town &amp; where we met our first friend, Ingo.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Passion Pie Cafe</strong>
+                <p>One of our favorite pastry and coffee spots.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Rama Bakery &amp; Cafe</strong>
+                <p>Our dear friend KK's bakery &amp; cafe.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Mile Marker 7 Coffee</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Kokopelli's Caf&eacute;</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Bullocks Grocery</strong>
+                <p>Our awesome local grocery store. Please support!</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Prickly Pear Coop (Fridge)</strong>
+                <p>Fresh local goodies and tasty dried snacks.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Ardie's Market</strong>
+                <p>Amazing family-owned ice cream shop.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Bigfoot Restaurant</strong>
+                <p>Our favorite restaurant &mdash; where we went after we got married in Dec 2025.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Linh's Rice and Noodles</strong>
+                <p>Great little food truck. Favorites: lemongrass chicken, mixed veggie with rice, and eggrolls.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Mexican Grill</strong>
+                <p>Amazing burritos, Navajo Tacos, tacos &mdash; yes, it's in a gas station = hidden gem!</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Truth or Consequences Brewing Co.</strong>
+                <p>Great place to meet up, bring snacks and play a board game. Great NA options (kombucha and hop water).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Outer Edge Pizzeria</strong>
+              </div>
+              <div class="legend-pin">
+                <strong>Sidekixx: Kitchen, Bar, &amp; Bowling</strong>
+                <p>Great pizza and bowling! You can wear your own shoes (if close-toed).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>A &amp; B Drive In</strong>
+                <p>Old school burgers &amp; fries.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-murals">
+            <button class="legend-panel-header" data-target="murals">
+              <span class="legend-dot" style="background:#C2185B; outline: 2px solid #7B1040; outline-offset: 2px;"></span>
+              <span>Kat's Murals</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Cat Tree Mural</strong>
+                <p>Inside Ingo's cafe. Kat's first mural in town, 2023. Black-light reactive cover-up honoring the previous concept with a new design.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>420 Event Space</strong>
+                <p>Outside &mdash; most recent mural 2025 for Ingo's dance / club space.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Glamp Camp Mural</strong>
+                <p>Outside wall directory mural. There's also a small cactus mural inside the office &mdash; ask the camp host to show you around.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Fibonacci Spiral</strong>
+                <p>Kat painted a Fibonacci spiral in the sound studio for Chris.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-panel" id="layer-outside">
+            <button class="legend-panel-header" data-target="outside">
+              <span class="legend-dot" style="background:#558B2F;"></span>
+              <span>Outside Fun</span>
+              <span class="legend-chevron">&#9662;</span>
+            </button>
+            <div class="legend-panel-body">
+              <div class="legend-pin">
+                <strong>Rotary Park</strong>
+                <p>Where we take out after floating the river.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Ralph Edwards Park</strong>
+                <p>Great place to hang out in the grass or watch birds over the river. Saturday farmers market 7&ndash;10am (summer hours).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Elephant Butte Dam View</strong>
+                <p>See the historic dam site and THE Elephant Butte.</p>
+              </div>
+              <div class="legend-pin">
+                <strong>State Park Entrance</strong>
+                <p>Drive right up to the water for beach time. Wear water shoes!</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Healing Waters Trail</strong>
+                <p>Great trail along the mesa with views of the mountain at sunset and river birds in the morning. Two parking areas (north and south ends of the loop).</p>
+              </div>
+              <div class="legend-pin">
+                <strong>Float Take Out</strong>
+                <p>Where we take out after floating the river.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end accordions -->
+      </div><!-- end map-legend -->
+    </div>
+  </section>
+
+  <!-- Map Legend JS -->
+  <script>
+    function toggleLayer(layerId) {
+      const panel = document.getElementById('layer-' + layerId);
+      if (!panel) return;
+      const body = panel.querySelector('.legend-panel-body');
+      const header = panel.querySelector('.legend-panel-header');
+      const isOpen = body.classList.contains('is-open');
+      body.classList.toggle('is-open', !isOpen);
+      header.classList.toggle('is-open', !isOpen);
+    }
+
+    // Panel header clicks
+    document.querySelectorAll('.legend-panel-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target');
+        toggleLayer(target);
+      });
+    });
+
+    // Color key dot clicks — scroll to panel and expand
+    document.querySelectorAll('.legend-key-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const layerId = btn.getAttribute('data-layer');
+        const panel = document.getElementById('layer-' + layerId);
+        if (!panel) return;
+        const body = panel.querySelector('.legend-panel-body');
+        const header = panel.querySelector('.legend-panel-header');
+        body.classList.add('is-open');
+        header.classList.add('is-open');
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+
+  <!-- Fade-in on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-in');
+      items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), 100 * i);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

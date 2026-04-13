@@ -7,36 +7,51 @@
   <title>Drew & Kathryn | Registry</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
   <link rel="stylesheet" href="theme.css">
+  <style>
+    .cactus-anchor {
+      position: fixed;
+      bottom: 0;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .cactus-image {
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- Decorative cactus -->
-  <div class="cactus-anchor" style="position:fixed;bottom:0;right:-100px;width:300px;height:300px;z-index:1000;display:flex;align-items:flex-end;justify-content:flex-end;overflow:hidden;pointer-events:none;">
-    <img src="barrel_cactus.svg" alt="Decorative barrel cactus" style="width:60%;height:60%;object-fit:contain;" />
+  <div class="cactus-anchor">
+    <img src="barrel_cactus.svg" alt="Decorative barrel cactus" class="cactus-image" />
   </div>
 
   <!-- Nav -->
-  <nav id="section-nav" style="position:sticky;top:0;">
-    <a href="index.html" class="nav-tab">&#8592; Back to katanddrew.com</a>
-    <a href="#registry" class="nav-tab is-active">Registry</a>
+  <nav class="page-nav">
+    <a href="index.html" class="page-nav-back">&larr; Home</a>
+    <span class="page-nav-title">Registry</span>
   </nav>
 
-  <!-- Hero -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="box has-text-centered has-text-white has-background-link">
-        <h1 class="is-size-1">Registry</h1>
-        <p class="is-size-5" style="font-family:'Tinos',serif;font-style:italic;margin-top:0.5rem;">
-          Your presence at our wedding is the greatest gift of all.<br>
-          But for those who wish to contribute to our next chapter together, we'd be endlessly grateful.
-        </p>
-      </div>
-    </div>
-  </section>
+  <!-- Intro -->
+  <div class="has-text-centered fade-in" style="padding:1.5rem 1rem 0;">
+    <p style="font-family:'Tinos',serif;font-style:italic;font-size:1.1rem;color:hsl(8,30%,30%);">
+      Your presence at our wedding is the greatest gift of all.<br>
+      But for those who wish to contribute to our next chapter together, we'd be endlessly grateful.
+    </p>
+  </div>
 
   <!-- Fund Cards -->
-  <section class="section" id="registry">
+  <section class="section fade-in" id="registry">
     <div class="container is-max-desktop">
       <div class="columns is-centered is-multiline">
 
@@ -85,11 +100,22 @@
       <!-- Footer note -->
       <div class="has-text-centered registry-footer-note">
         <p style="font-size:1.25rem;color:hsl(8,48%,42%);font-weight:700;">Zelle: 802-377-5440</p>
-        <p style="margin-top:0.5rem;">Cash and cards are also welcome at the wedding &mdash; no pressure, no rules. 💛 Your presence is the greatest gift. Thank you.</p>
+        <p style="margin-top:0.5rem;">Cash and cards are also welcome at the wedding &mdash; no pressure, no rules. Your presence is the greatest gift. Thank you.</p>
       </div>
 
     </div>
   </section>
 
+  <!-- Fade-in on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-in');
+      items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), 100 * i);
+      });
+    });
+  </script>
+
 </body>
+
 </html>
