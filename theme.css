@@ -121,17 +121,18 @@ h1, .is-size-1 {
 }
 
 .travel-table th {
-  border-bottom: 2px solid hsl(8, 48%, 42%);
+  border-bottom: 2px solid rgba(255,255,255,0.5);
   padding: 0.5rem 0.6rem;
   font-weight: 700;
-  color: hsl(8, 30%, 30%);
+  color: white;
   white-space: nowrap;
 }
 
 .travel-table td {
   padding: 0.5rem 0.6rem;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
   vertical-align: top;
+  color: white;
 }
 
 .travel-table tr:last-child td {
@@ -156,9 +157,9 @@ h1, .is-size-1 {
   color: white;
 }
 
-.travel-ride-yes   { color: hsl(137, 21%, 30%); font-weight: 700; }
-.travel-ride-maybe { color: hsl(34, 52%, 40%); font-weight: 700; }
-.travel-ride-no    { color: hsl(0, 0%, 55%); }
+.travel-ride-yes   { color: hsl(120, 80%, 80%); font-weight: 700; }
+.travel-ride-maybe { color: hsl(40, 100%, 75%); font-weight: 700; }
+.travel-ride-no    { color: rgba(255,255,255,0.5); }
 
 /* ── Full Calendar ── */
 .cal-toggle-btn {

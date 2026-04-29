@@ -32,7 +32,10 @@
 
       <!-- Submit travel form -->
       <div class="box has-background-primary">
-        <p class="title has-text-white mb-4" style="font-size:2rem;">Share Your Travel Plans</p>
+        <button id="formToggleBtn" class="cal-toggle-btn" style="font-size:2.5rem;font-family:'Pinyon Script',cursive;color:white;">
+          Share Your Travel Plans <span class="cal-toggle-chevron" style="color:hsl(8,48%,42%);">&#9662;</span>
+        </button>
+        <div id="formWrap" style="overflow:hidden;max-height:0;transition:max-height 0.4s ease;">
         <form id="travelForm">
           <div class="columns is-multiline">
             <!-- Row 1: Display Name + Group Size -->
@@ -118,21 +121,55 @@
           </div>
           <div id="travelFormMessage" class="notification is-hidden"></div>
         </form>
-      </div>
 
-      <!-- Arrivals board -->
-      <div class="mt-5">
-        <button id="boardToggleBtn" class="cal-toggle-btn" style="font-size:2.5rem;font-family:'Pinyon Script',cursive;color:black;">
-          Who's Coming When <span class="cal-toggle-chevron" style="color:hsl(8,48%,42%);">&#9662;</span>
-        </button>
-        <div id="boardWrap" style="overflow:hidden;max-height:0;transition:max-height 0.4s ease;">
-          <p class="content has-text-black is-size-6 mb-3 mt-2">Coordinate rides and arrivals with fellow guests.</p>
-          <div id="travelBoard">
-            <p class="has-text-black" style="opacity:0.6;font-style:italic;">Loading travel plans...</p>
+        <!-- Arrivals board (nested inside travel plans) -->
+        <div class="mt-5">
+          <button id="boardToggleBtn" class="cal-toggle-btn" style="font-size:2.5rem;font-family:'Pinyon Script',cursive;color:white;">
+            Who's Coming When <span class="cal-toggle-chevron" style="color:hsl(8,48%,42%);">&#9662;</span>
+          </button>
+          <div id="boardWrap" style="overflow:hidden;max-height:0;transition:max-height 0.4s ease;">
+            <p class="content has-text-white is-size-6 mb-3 mt-2">Coordinate rides and arrivals with fellow guests.</p>
+            <div id="travelBoard">
+              <p class="has-text-white" style="opacity:0.6;font-style:italic;">Loading travel plans...</p>
+            </div>
           </div>
+        </div>
+
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- What to Bring -->
+  <section class="section has-text-centered fade-in" id="what-to-bring">
+    <h2 class="title has-text-black">What to Bring</h2>
+    <div class="divider"></div>
+    <div class="container is-max-tablet has-text-left has-text-black content">
+      <p class="has-text-weight-semibold is-size-6 mb-2 has-text-centered">Weather Expectations</p>
+      <p class="has-text-centered"><strong>Low:</strong> Low 50s in the AM &nbsp;&nbsp;|&nbsp;&nbsp; <strong>High:</strong> Mid 80s — sunny and can get quite windy in the afternoon</p>
+      <p class="has-text-weight-semibold is-size-6 mb-2 mt-4">Essentials</p>
+      <ul>
+        <li>Sunscreen &amp; lotion (it's New Mexico in May — you will burn, and it's dry af)</li>
+        <li>Sun clothing: SPF or linen, silks, light and comfortable</li>
+        <li>Sunglasses and a hat or something for shade</li>
+        <li>Comfortable shoes — it's a park/plaza, not a ballroom. Good walking shoes, and hikers if you plan to explore</li>
+        <li>Water bottle! — Seriously, hydration is critical</li>
+        <li>Dancing clothes and shoes!</li>
+      </ul>
+      <p class="has-text-weight-semibold is-size-6 mb-2 mt-4">Just in Case</p>
+      <ul>
+        <li>Light jacket or layer for the evening (desert temps drop fast)</li>
+        <li>Cash for the food trucks</li>
+        <li>Any medications/allergy stuff (epi-pens, inhalers, etc.)</li>
+      </ul>
+      <p class="has-text-weight-semibold is-size-6 mb-2 mt-4">Nice to Have</p>
+      <ul>
+        <li>A small backpack or bag for treasures — and bringing that water bottle with you!</li>
+        <li>A small fan or handheld mister</li>
+        <li>Phone charger / portable battery (photos all day)</li>
+        <li>Tissues 🥲</li>
+      </ul>
     </div>
   </section>
 
@@ -223,6 +260,20 @@
 
     loadTravelBoard();
 
+    // Form toggle
+    const formToggleBtn = document.getElementById('formToggleBtn');
+    const formWrap = document.getElementById('formWrap');
+    formToggleBtn.addEventListener('click', () => {
+      const isOpen = formWrap.style.maxHeight !== '0px' && formWrap.style.maxHeight !== '';
+      if (isOpen) {
+        formWrap.style.maxHeight = '0';
+        formToggleBtn.classList.remove('is-open');
+      } else {
+        formWrap.style.maxHeight = '4000px';
+        formToggleBtn.classList.add('is-open');
+      }
+    });
+
     // Board toggle
     const boardToggleBtn = document.getElementById('boardToggleBtn');
     const boardWrap = document.getElementById('boardWrap');
@@ -232,7 +283,7 @@
         boardWrap.style.maxHeight = '0';
         boardToggleBtn.classList.remove('is-open');
       } else {
-        boardWrap.style.maxHeight = boardWrap.scrollHeight + 'px';
+        boardWrap.style.maxHeight = '2000px';
         boardToggleBtn.classList.add('is-open');
       }
     });
