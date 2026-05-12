@@ -833,3 +833,147 @@ h1, .is-size-1 {
     padding-bottom: 0.25rem !important;
   }
 }
+
+/* ── Gallery ─────────────────────────────────────────────── */
+
+.gallery-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 0.75rem;
+}
+
+.gallery-card {
+  background: #fff;
+  border-radius: var(--bulma-radius-large);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.gallery-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: hsl(44, 35%, 88%);
+  min-height: 200px;
+  object-fit: cover;
+}
+
+.gallery-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+}
+
+.gallery-card-name {
+  font-family: 'Tinos', serif;
+  font-size: 0.9rem;
+  color: hsl(8, 30%, 30%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.gallery-save-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: hsl(8, 48%, 42%);
+  color: #fff;
+  border: none;
+  border-radius: var(--bulma-radius);
+  padding: 0.35rem 0.75rem;
+  font-family: 'Tinos', serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  text-decoration: none;
+}
+
+.gallery-save-btn:hover {
+  opacity: 0.8;
+}
+
+.gallery-save-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* Loading spinner */
+.gallery-loader {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.gallery-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid hsl(44, 35%, 78%);
+  border-top-color: hsl(8, 48%, 42%);
+  border-radius: 50%;
+  animation: gallery-spin 0.7s linear infinite;
+}
+
+@keyframes gallery-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Empty / error states */
+.gallery-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-family: 'Tinos', serif;
+  color: hsl(8, 30%, 30%);
+  font-size: 1.1rem;
+}
+
+.gallery-empty a {
+  color: hsl(8, 48%, 42%);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* View gallery link on photos page */
+.gallery-link-box {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.gallery-link-box a {
+  color: hsl(8, 48%, 42%);
+  font-family: 'Tinos', serif;
+  font-size: 1.05rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.15s;
+}
+
+.gallery-link-box a:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+  .gallery-feed {
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
+
+  .gallery-card {
+    border-radius: var(--bulma-radius-medium);
+  }
+}

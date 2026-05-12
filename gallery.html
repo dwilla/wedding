@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drew & Kathryn | Gallery</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav class="page-nav">
+    <a href="index.html" class="page-nav-back">&larr; Home</a>
+    <span class="page-nav-title">Gallery</span>
+  </nav>
+
+  <!-- Gallery -->
+  <section class="section fade-in" id="gallery">
+    <p class="content has-text-black has-text-centered is-size-6" style="max-width:560px;margin:0 auto 1.5rem;">
+      Photos from the celebration. <a href="photos.html">Upload yours</a> to add to the collection!
+    </p>
+
+    <div class="gallery-feed" id="galleryFeed"></div>
+
+    <!-- Infinite-scroll sentinel & loader -->
+    <div class="gallery-loader" id="galleryLoader" style="display:none;">
+      <div class="gallery-spinner"></div>
+    </div>
+
+    <!-- Empty state (shown when no photos exist) -->
+    <div class="gallery-empty" id="galleryEmpty" style="display:none;">
+      No photos yet! Be the first to <a href="photos.html">upload some</a>.
+    </div>
+
+    <!-- Error state -->
+    <div class="gallery-empty" id="galleryError" style="display:none;">
+      Could not load photos. Please try refreshing the page.
+    </div>
+
+    <!-- Invisible sentinel for IntersectionObserver -->
+    <div id="gallerySentinel" style="height:1px;"></div>
+  </section>
+
+  <!-- Gallery JS -->
+  <script>
+    // ── Configuration ──────────────────────────────────────
+    // Replace this URL with your deployed Apps Script web-app URL
+    const GALLERY_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYNaFWSITKf3R2RsgPfb5ANwdx9nMOryFRtsUVryFSSTJ9FEGhaEj1kySNeaZg4TmytQ/exec';
+    const PAGE_SIZE = 10;
+
+    // ── State ──────────────────────────────────────────────
+    let nextPageToken = null;
+    let isFirstLoad = true;
+    let isLoading = false;
+    let hasMore = true;
+
+    // ── DOM refs ───────────────────────────────────────────
+    const feed = document.getElementById('galleryFeed');
+    const loader = document.getElementById('galleryLoader');
+    const emptyState = document.getElementById('galleryEmpty');
+    const errorState = document.getElementById('galleryError');
+    const sentinel = document.getElementById('gallerySentinel');
+
+    // ── JSONP helper (fallback for CORS issues with Apps Script) ──
+    let jsonpCounter = 0;
+    function jsonpFetch(url) {
+      return new Promise((resolve, reject) => {
+        const cbName = '_galleryCallback_' + (jsonpCounter++);
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error('JSONP request timed out'));
+        }, 60000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = function (data) {
+          cleanup();
+          resolve(data);
+        };
+
+        const script = document.createElement('script');
+        const separator = url.includes('?') ? '&' : '?';
+        script.src = url + separator + 'callback=' + cbName;
+        script.onerror = function () {
+          cleanup();
+          reject(new Error('Script load failed'));
+        };
+        document.head.appendChild(script);
+      });
+    }
+
+    // ── Fetch with fetch-first, JSONP-fallback strategy ────
+    async function fetchPhotos(url) {
+      // Try fetch first (works when served from HTTPS origin)
+      try {
+        const resp = await fetch(url, { redirect: 'follow' });
+        if (resp.ok) return await resp.json();
+      } catch (e) {
+        console.log('fetch failed, falling back to JSONP:', e.message);
+      }
+      // Fall back to JSONP (works from any origin, including file://)
+      return jsonpFetch(url);
+    }
+
+    // ── Fetch a page of photos ─────────────────────────────
+    async function loadPage() {
+      if (isLoading || !hasMore) return;
+      isLoading = true;
+      loader.style.display = 'flex';
+
+      try {
+        let url = `${GALLERY_SCRIPT_URL}?action=getPhotos&pageSize=${PAGE_SIZE}`;
+        if (nextPageToken) {
+          url += '&pageToken=' + encodeURIComponent(nextPageToken);
+        }
+        const data = await fetchPhotos(url);
+
+        if (data.status !== 'ok') throw new Error(data.message || 'Unknown error');
+
+        nextPageToken = data.nextPageToken || null;
+        hasMore = data.hasMore;
+
+        if (data.photos.length === 0 && isFirstLoad) {
+          emptyState.style.display = 'block';
+          loader.style.display = 'none';
+          isLoading = false;
+          isFirstLoad = false;
+          return;
+        }
+
+        isFirstLoad = false;
+
+        data.photos.forEach((photo, i) => {
+          const card = createCard(photo);
+          feed.appendChild(card);
+          // Staggered fade-in
+          setTimeout(() => card.classList.add('is-visible'), 60 * i);
+        });
+
+      } catch (err) {
+        console.error('Gallery fetch error:', err);
+        if (isFirstLoad) {
+          errorState.style.display = 'block';
+        }
+        hasMore = false;
+      }
+
+      loader.style.display = 'none';
+      isLoading = false;
+    }
+
+    // ── Build a gallery card ───────────────────────────────
+    function createCard(photo) {
+      const card = document.createElement('div');
+      card.className = 'gallery-card';
+
+      // Image
+      const img = document.createElement('img');
+      img.src = photo.thumbnailUrl || photo.url;
+      img.alt = extractName(photo.name) || 'Wedding photo';
+      img.loading = 'lazy';
+      // On error, try the direct URL without size param
+      img.onerror = function () {
+        if (this.src !== photo.url) {
+          this.src = photo.url;
+        }
+      };
+      card.appendChild(img);
+
+      // Footer with name + save button
+      const footer = document.createElement('div');
+      footer.className = 'gallery-card-footer';
+
+      // Extract uploader name from filename pattern: timestamp_Name_001.ext
+      const nameEl = document.createElement('span');
+      nameEl.className = 'gallery-card-name';
+      nameEl.textContent = extractName(photo.name);
+      footer.appendChild(nameEl);
+
+      // Save / download button
+      const saveLink = document.createElement('a');
+      saveLink.className = 'gallery-save-btn';
+      saveLink.href = photo.url;
+      saveLink.target = '_blank';
+      saveLink.rel = 'noopener';
+      saveLink.download = photo.name || 'photo.jpg';
+      saveLink.innerHTML = '<svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18v12m0 0l-4-4m4 4l4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Save';
+      footer.appendChild(saveLink);
+
+      card.appendChild(footer);
+      return card;
+    }
+
+    // ── Parse uploader name from the filename ──────────────
+    // Filename format: 2026-05-08_14-30-00_Sarah_001.jpg
+    function extractName(filename) {
+      if (!filename) return '';
+      // Strip extension
+      const base = filename.replace(/\.[^.]+$/, '');
+      // Split by underscore: [date, time, name, number]
+      const parts = base.split('_');
+      if (parts.length >= 4) {
+        // Name is everything between time and the trailing number
+        const nameParts = parts.slice(2, -1);
+        return nameParts.join(' ');
+      }
+      return '';
+    }
+
+    // ── Infinite scroll via IntersectionObserver ───────────
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !isLoading && hasMore) {
+        loadPage();
+      }
+    }, {
+      rootMargin: '400px'  // start loading well before user reaches bottom
+    });
+
+    observer.observe(sentinel);
+
+    // ── Initial load ───────────────────────────────────────
+    loadPage();
+  </script>
+
+  <!-- Fade-in on load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.fade-in');
+      items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('is-visible'), 100 * i);
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -17,7 +17,7 @@
 //    a NEW deployment version for changes to take effect.
 // ============================================================
 
-const FOLDER_ID = 'YOUR_GOOGLE_DRIVE_FOLDER_ID_HERE';
+const FOLDER_ID = '1QQJXzzKFuJIWkmKRR75g5Th-cMojwJlv';
 
 /**
  * Handles POST requests — receives base64-encoded photos and saves to Drive.
@@ -59,10 +59,96 @@ function doPost(e) {
 }
 
 /**
- * Handles GET requests — not used for now, but could serve photo URLs later.
+ * Handles GET requests — serves paginated photo listing from the Drive folder.
+ *
+ * Uses the Drive Advanced Service (Drive API v3) for fast server-side
+ * filtering, sorting, and pagination. Only fetches the batch of files
+ * needed for each page instead of iterating the entire folder.
+ *
+ * PREREQUISITE: Enable the Drive Advanced Service in the Apps Script editor:
+ *   Services (+ button) > Drive API > Add
+ *
+ * Query parameters:
+ *   action    — must be "getPhotos"
+ *   pageSize  — photos per page (default 10, max 50)
+ *   pageToken — cursor for the next page (returned as nextPageToken)
+ *   callback  — (optional) JSONP callback function name
+ *
+ * Returns JSON (or JSONP if callback is provided):
+ *   { status, photos: [...], nextPageToken, hasMore }
+ *
+ * IMPORTANT: The Google Drive folder (FOLDER_ID) must be shared as
+ * "Anyone with the link can view" for the image URLs to work.
  */
 function doGet(e) {
+  try {
+    var params = e && e.parameter ? e.parameter : {};
+    var action = params.action || '';
+    var callback = params.callback || '';
+
+    if (action !== 'getPhotos') {
+      return sendResponse({ status: 'ok', message: 'Photo upload endpoint is live.' }, callback);
+    }
+
+    var pageSize = Math.min(50, Math.max(1, parseInt(params.pageSize, 10) || 10));
+    var pageToken = params.pageToken || null;
+
+    // Use Drive Advanced Service for server-side query, sort, and pagination
+    var query = "'" + FOLDER_ID + "' in parents"
+              + " and mimeType contains 'image/'"
+              + " and trashed = false";
+
+    var options = {
+      q: query,
+      pageSize: pageSize,
+      orderBy: 'createdTime desc',
+      fields: 'nextPageToken, files(id, name, createdTime)',
+      supportsAllDrives: true,
+      includeItemsFromAllDrives: true
+    };
+
+    if (pageToken) {
+      options.pageToken = pageToken;
+    }
+
+    var result = Drive.Files.list(options);
+    var files = result.files || [];
+    var nextToken = result.nextPageToken || null;
+
+    var photos = files.map(function(f) {
+      return {
+        id: f.id,
+        name: f.name,
+        url: 'https://lh3.googleusercontent.com/d/' + f.id,
+        thumbnailUrl: 'https://lh3.googleusercontent.com/d/' + f.id + '=w800',
+        date: new Date(f.createdTime).getTime()
+      };
+    });
+
+    return sendResponse({
+      status: 'ok',
+      photos: photos,
+      nextPageToken: nextToken,
+      hasMore: !!nextToken
+    }, callback);
+
+  } catch (err) {
+    var cb = (e && e.parameter && e.parameter.callback) || '';
+    return sendResponse({ status: 'error', message: err.toString() }, cb);
+  }
+}
+
+/**
+ * Wraps response as JSONP if a callback name is provided, otherwise returns plain JSON.
+ */
+function sendResponse(data, callback) {
+  var json = JSON.stringify(data);
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + json + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
   return ContentService
-    .createTextOutput(JSON.stringify({ status: 'ok', message: 'Photo upload endpoint is live.' }))
+    .createTextOutput(json)
     .setMimeType(ContentService.MimeType.JSON);
 }
